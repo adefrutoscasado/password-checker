@@ -1,0 +1,37 @@
+{
+  "name": "password-checker",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "^4.16.4",
+    "morgan": "~1.9.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router": "^5.0.0",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "2.1.8"
+  },
+  "scripts": {
+    "start": "npm run build && npm run serve",
+    "react-dev": "react-scripts start",
+    "express-dev": "nodemon ./server/bin/www",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "serve": "node ./server/bin/www"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
