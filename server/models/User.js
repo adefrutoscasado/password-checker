@@ -18,7 +18,6 @@ class User extends unique(Model) {
       required: ["username", "email", "password"],
       properties: {
         id: { type: 'integer' },
-        username: { type: 'string' },
         email: { type: 'string' },
         password: { type: 'string' }
       }
