@@ -18,4 +18,21 @@ app.get("/", function(req, res) {
 const auth = require('./routes/unauthenticatedRoutes/auth')
 app.use('/auth', auth)
 
+// 404 Not Found Errors
+app.use((req, res, next) => {
+  const err = new Error('Endpoint not Found')
+  err.status = 404
+  next(err)
+})
+
+// 500 Internal Errors
+app.use((err, req, res, next) => {
+  logger.error(err)
+  logger.error(err.stack)
+  res.status(err.status || 500)
+  res.send({
+    message: err.message || 'Undefined error',
+    errors: err.errors,
+  })
+})
 module.exports = app;

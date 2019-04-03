@@ -6,12 +6,16 @@
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "^4.16.4",
+    "knex": "^0.16.3",
     "morgan": "~1.9.0",
+    "objection": "^1.6.7",
+    "objection-unique": "^1.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "2.1.8"
+    "react-scripts": "2.1.8",
+    "sqlite3": "^4.0.6"
   },
   "scripts": {
     "start": "npm run build && npm run serve",
@@ -20,7 +24,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "serve": "node ./server/bin/www"
+    "serve": "node ./server/bin/www",
+    "migrate:latest": "knex migrate:latest",
+    "migrate:rollback": "knex migrate:rollback"
   },
   "eslintConfig": {
     "extends": "react-app"
