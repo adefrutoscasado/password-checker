@@ -1,8 +1,11 @@
 var express = require("express");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+process.env.JWT_SECRET = process.env.JWT_SECRET || 'TEMP_SECRET'
 
 var app = express();
+
+app.set('JWT_SECRET', process.env.JWT_SECRET)
 
 app.use(logger("dev"));
 app.use(express.json());
