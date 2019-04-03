@@ -1,8 +1,11 @@
 var express = require("express");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+process.env.JWT_SECRET = process.env.JWT_SECRET || 'TEMP_SECRET'
 
 var app = express();
+
+app.set('JWT_SECRET', process.env.JWT_SECRET)
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -27,8 +30,7 @@ app.use((req, res, next) => {
 
 // 500 Internal Errors
 app.use((err, req, res, next) => {
-  logger.error(err)
-  logger.error(err.stack)
+  console.log(err)
   res.status(err.status || 500)
   res.send({
     message: err.message || 'Undefined error',
