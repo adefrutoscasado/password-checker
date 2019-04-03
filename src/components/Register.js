@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import {Button, Icon} from 'semantic-ui-react'
 import ApiClient from '../helpers/ApiClient'
 
-export default class Schedule extends Component {
+export default class Register extends Component {
 
   state = {
     username: '',
@@ -24,18 +24,12 @@ export default class Schedule extends Component {
       <div>
         <form>
           <input
-            type="text"
-            name="username"
-            placeholder="Enter your username"
-            value={this.state.username}
-            onChange={this.handleChange}
-          />
-          <input
             type="email"
             name="email"
             placeholder="Enter your e-mail"
             value={this.state.email}
             onChange={this.handleChange}
+            required={true}
           />
           <input
             type="password"
@@ -43,6 +37,7 @@ export default class Schedule extends Component {
             placeholder="New password"
             value={this.state.password}
             onChange={this.handleChange}
+            required={true}
           />
           <input
             type="password"
@@ -50,6 +45,7 @@ export default class Schedule extends Component {
             placeholder="Confirm your new password"
             value={this.state.confirmPassword}
             onChange={this.handleChange}
+            required={true}
           />
         </form>
         <Button icon labelPosition='right' onClick={this.handleClick}>

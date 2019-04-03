@@ -7,8 +7,8 @@ export default class Header extends Component {
       <header>
         <nav>
           <ul>
-            <li><Link to='/'>Home</Link></li>
-            <li><Link to='/register'>New User Register</Link></li>
+            <li><Link to='/'>Login</Link></li>
+            <li><Link to='/register'>Register</Link></li>
           </ul>
         </nav>
       </header>

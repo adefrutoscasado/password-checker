@@ -9,6 +9,15 @@ export default class ApiClient {
       password,
       confirmPassword
     };
+    return ApiClient.fetch(Config.api.getPath('/auth/register'), 'POST', data)
+  }
+
+  static async requestLogin (username, email, password) {
+    const data = {
+      username,
+      email,
+      password
+    };
     return ApiClient.fetch(Config.api.getPath('/auth/login'), 'POST', data)
   }
 
