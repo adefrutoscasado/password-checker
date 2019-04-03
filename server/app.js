@@ -1,6 +1,8 @@
-var express = require("express");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
+const express = require("express");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const helmet = require('helmet')
+const cors = require('cors')
 process.env.JWT_SECRET = process.env.JWT_SECRET || 'TEMP_SECRET'
 
 var app = express();
@@ -12,6 +14,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+// Add some security headers
+app.use(helmet())
+// Add cors header
+app.use(cors({
+  origin: false,
+  credentials: true
+}))
+
 app.use(express.static("build", { root: "." }));
 
 app.get("/", function(req, res) {
@@ -20,6 +30,9 @@ app.get("/", function(req, res) {
 
 const auth = require('./routes/unauthenticatedRoutes/auth')
 app.use('/auth', auth)
+
+const unAuth = require('./routes/authenticatedRoutes')
+app.use('/', unAuth)
 
 // 404 Not Found Errors
 app.use((req, res, next) => {
