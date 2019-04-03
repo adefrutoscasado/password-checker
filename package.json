@@ -15,9 +15,8 @@
     "react-router": "^5.0.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
-    "sqlite3": "^4.0.6",
-    "semantic-ui-react": "^0.86.0"
-
+    "semantic-ui-react": "^0.86.0",
+    "sqlite3": "^4.0.6"
   },
   "scripts": {
     "start": "npm run build && npm run serve",

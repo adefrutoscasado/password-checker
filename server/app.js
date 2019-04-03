@@ -27,8 +27,7 @@ app.use((req, res, next) => {
 
 // 500 Internal Errors
 app.use((err, req, res, next) => {
-  logger.error(err)
-  logger.error(err.stack)
+  console.log(err)
   res.status(err.status || 500)
   res.send({
     message: err.message || 'Undefined error',

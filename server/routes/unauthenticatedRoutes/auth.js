@@ -1,15 +1,16 @@
-var express = require('express');
+const express = require('express')
 const router = express.Router({mergeParams: true})
+const asyncWrap = require('./../../helpers/asyncWrap')
 
 const { User } = require('./../../models')
 
-router.post('/register', async function(req, res, next) {
+router.post('/register', asyncWrap( async (req, res, next) => {
   let data = req.body
   await User.query().insert(data)
   res.json(
     {user: 'OK'}
   );
-});
+}));
 
 router.post('/login', function(req, res, next) {
   res.json(
