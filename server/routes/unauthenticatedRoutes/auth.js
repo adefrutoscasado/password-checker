@@ -1,8 +1,8 @@
 const express = require('express')
-const jwtService = require('./../../services/jwtService')
 const router = express.Router({mergeParams: true})
-const asyncWrap = require('./../../helpers/asyncWrap')
 
+const jwtService = require('./../../services/jwtService')
+const asyncWrap = require('./../../helpers/asyncWrap')
 const { User } = require('./../../models')
 
 router.post('/register', asyncWrap( async (req, res, next) => {

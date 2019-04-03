@@ -21,6 +21,9 @@ app.get("/", function(req, res) {
 const auth = require('./routes/unauthenticatedRoutes/auth')
 app.use('/auth', auth)
 
+const unAuth = require('./routes/authenticatedRoutes')
+app.use('/', unAuth)
+
 // 404 Not Found Errors
 app.use((req, res, next) => {
   const err = new Error('Endpoint not Found')
