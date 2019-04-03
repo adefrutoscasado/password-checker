@@ -3,7 +3,7 @@ const knexConnection = require('./../services/knexConnection')
 Model.knex(knexConnection)
 
 const unique = require('objection-unique')({
-  fields: ['email', 'username'],
+  fields: ['email'],
   identifiers: ['id']
 });
 
