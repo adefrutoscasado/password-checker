@@ -7,7 +7,10 @@ export function fetchLogin(email, password) {
     dispatch(fetchLoginBegin());
     return fetch(Config.api.getPath('/auth/login'), {
       method: 'POST',
-      body: JSON.stringify(email, password),
+      body: JSON.stringify({
+        email,
+        password
+      }),
       headers: {
         'Content-Type': 'application/json',
         'Cache-Control': 'no-cache',
@@ -17,9 +20,11 @@ export function fetchLogin(email, password) {
       .then(handleErrors)
       .then(res => res.json())
       .then(json => {
-        dispatch(fetchLoginSuccess());
+        dispatch(fetchLoginSuccess(json));
       })
-      .catch(error => dispatch(fetchLoginFailure(error)));
+      .catch(error => {
+        dispatch(fetchLoginFailure(error))
+      });
   };
   
 }
@@ -40,7 +45,7 @@ const fetchLoginFailure = payload => ({
 
 function handleErrors(response) {
   if (!response.ok){
-    throw new Error(response.message);
+    throw new Error(response.statusText);
   }
   return response;
 }

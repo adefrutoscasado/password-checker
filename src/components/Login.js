@@ -14,7 +14,7 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-class Home extends Component {
+class Login extends Component {
 
   state = {
     email: '',
@@ -60,4 +60,4 @@ class Home extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

@@ -1,20 +1,36 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { Router, Route, browserHistory } from 'react-router';
 
-import Header from './components/Header';
-import Main from './components/Main';
+import HeaderNoAuth from './components/HeaderNoAuth';
+import HomeNoAuth from './components/HomeNoAuth';
+
+import HeaderAuth from './components/HeaderAuth';
+import HomeAuth from './components/HomeAuth';
+
+import {connect} from 'react-redux';
+
+const mapStateToProps = state => ({
+  loggedIn: state.loggedIn
+})
 
 class App extends Component {
   render() {
-    return (
-      <div>
-        <Header />
-        <Main />
-      </div>
-    );
+    if (this.props.loggedIn) {
+      return (
+        <div>
+          <HeaderAuth />
+          <HomeAuth />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <HeaderNoAuth />
+          <HomeNoAuth />
+        </div>
+      );
+    }
   }
 }
 
-export default App;
+export default connect(mapStateToProps)(App)

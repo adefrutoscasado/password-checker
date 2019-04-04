@@ -16,12 +16,11 @@ function rootReducer (state = initialState, action) {
       return {
         ...state,
         loggedIn: true,
-        userId: action.payload.userId,
+        userId: action.payload.id,
         access_token: action.payload.access_token
       }
     
     case DO_LOGIN_FAILURE:
-    console.log(action.payload)
       return {
         ...initialState,
         loggedIn: false,

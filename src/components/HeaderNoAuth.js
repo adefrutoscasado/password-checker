@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-export default class Header extends Component {
+export default class HeaderNoAuth extends Component {
   render() {
     return (
       <header>
