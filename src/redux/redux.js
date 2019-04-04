@@ -61,6 +61,9 @@ const getHeaders = (options = {}) => {
   };
 }
 
-const store = createStore(rootReducer, compose(applyMiddleware(fetchAsyncMiddleware, thunk)));
+// https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(fetchAsyncMiddleware, thunk)));
 
 export default store;
