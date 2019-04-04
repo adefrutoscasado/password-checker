@@ -1,3 +1,3 @@
-export const DO_LOGIN_REQUEST = "DO_LOGIN_REQUEST";
-export const DO_LOGIN_COMMIT = "DO_LOGIN_COMMIT";
-export const DO_LOGIN_ROLLBACK = "DO_LOGIN_ROLLBACK";
+import { getActionsNames } from '../redux-is-fetching/action-types';
+
+export const [DO_LOGIN_REQUEST, DO_LOGIN_REQUEST_COMMIT, DO_LOGIN_REQUEST_ROLLBACK] = getActionsNames('Login/DO_LOGIN');

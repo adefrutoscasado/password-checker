@@ -1,4 +1,4 @@
-import {DO_LOGIN_REQUEST, DO_LOGIN_COMMIT, DO_LOGIN_ROLLBACK} from './action-types';
+import {DO_LOGIN_REQUEST, DO_LOGIN_REQUEST_COMMIT, DO_LOGIN_REQUEST_ROLLBACK} from './action-types';
 
 export const initialState = {
   loggedIn: false,
@@ -14,7 +14,7 @@ export default function (state = initialState, action) {
     case DO_LOGIN_REQUEST:
       return state;
 
-    case DO_LOGIN_COMMIT:
+    case DO_LOGIN_REQUEST_COMMIT:
       return {
         ...state,
         loggedIn: true,
@@ -22,7 +22,7 @@ export default function (state = initialState, action) {
         access_token: action.payload.access_token
       }
     
-    case DO_LOGIN_ROLLBACK:
+    case DO_LOGIN_REQUEST_ROLLBACK:
       return {
         ...initialState,
         loggedIn: false,

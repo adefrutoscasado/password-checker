@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {Button, Icon} from 'semantic-ui-react'
-import ApiClient from '../helpers/ApiClient'
+import ApiClient from '../../helpers/ApiClient'
 
 export default class Register extends Component {
 

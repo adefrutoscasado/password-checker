@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {Button, Icon} from 'semantic-ui-react'
 import {connect} from 'react-redux'
-import {fetchLogin} from './actions'
+import {login} from './actions'
 
 const mapStateToProps = state => ({
   loggedIn: state.loggedIn,
@@ -10,7 +10,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchLogin: (email, password) => dispatch(fetchLogin(email, password))
+    login: (email, password) => dispatch(login(email, password))
   }
 }
 
@@ -26,7 +26,7 @@ class Login extends Component {
   }
 
   handleClick = () => {
-    this.props.fetchLogin(this.state.email, this.state.password)
+    this.props.login(this.state.email, this.state.password)
   }
 
   render() {

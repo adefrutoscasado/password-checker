@@ -1,7 +1,7 @@
 import Config from '../../constants/Config';
-import {DO_LOGIN_REQUEST, DO_LOGIN_COMMIT, DO_LOGIN_ROLLBACK} from './action-types';
+import {DO_LOGIN_REQUEST, DO_LOGIN_REQUEST_COMMIT, DO_LOGIN_REQUEST_ROLLBACK} from './action-types';
 
-export function fetchLogin(email, password) {
+export function login(email, password) {
 
   const data = {
     email,
@@ -11,8 +11,8 @@ export function fetchLogin(email, password) {
   return {
     types: [
       DO_LOGIN_REQUEST,
-      DO_LOGIN_COMMIT,
-      DO_LOGIN_ROLLBACK
+      DO_LOGIN_REQUEST_COMMIT,
+      DO_LOGIN_REQUEST_ROLLBACK
     ],
     effect: {
       url: Config.api.getPath('/auth/login'),
