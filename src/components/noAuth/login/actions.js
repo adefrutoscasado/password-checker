@@ -1,4 +1,4 @@
-import Config from '../../constants/Config';
+import Config from '../../../constants/Config';
 import {DO_LOGIN_REQUEST, DO_LOGIN_REQUEST_COMMIT, DO_LOGIN_REQUEST_ROLLBACK} from './action-types';
 
 export function login(email, password) {

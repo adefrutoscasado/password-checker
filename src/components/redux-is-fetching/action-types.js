@@ -21,11 +21,11 @@ export function getRollbackName(name) {
 }
 
 export function getActionsNames(name) {
-  return [
-    getRequestName(name),
-    getCommitName(name),
-    getRollbackName(name)
-  ];
+    return [
+        getRequestName(name),
+        getCommitName(name),
+        getRollbackName(name)
+    ];
 }
 
 export const getActionRoot = (actionType) => actionType.replace(COMMIT, '').replace(ROLLBACK, '');

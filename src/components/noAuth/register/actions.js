@@ -1,4 +1,4 @@
-import Config from '../../constants/Config';
+import Config from '../../../constants/Config';
 import {DO_REGISTER_REQUEST, DO_REGISTER_COMMIT, DO_REGISTER_ROLLBACK} from './action-types';
 
 export function registerUser(email, password, confirmPassword) {

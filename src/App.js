@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import HeaderNoAuth from './components/HeaderNoAuth';
-import HomeNoAuth from './components/HomeNoAuth';
+import HeaderNoAuth from './components/noAuth/Header';
+import HomeNoAuth from './components/noAuth/Home';
 
-import HeaderAuth from './components/HeaderAuth';
-import HomeAuth from './components/HomeAuth';
+import HeaderAuth from './components/auth/Header';
+import HomeAuth from './components/auth/Home';
 
 import {connect} from 'react-redux';
 
