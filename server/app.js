@@ -3,6 +3,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const helmet = require('helmet')
 const cors = require('cors')
+const bodyParser = require('body-parser')
 process.env.JWT_SECRET = process.env.JWT_SECRET || 'TEMP_SECRET'
 
 var app = express();
@@ -17,10 +18,11 @@ app.use(cookieParser());
 // Add some security headers
 app.use(helmet())
 // Add cors header
-app.use(cors({
-  origin: false,
-  credentials: true
-}))
+app.use(cors())
+
+// Body parsers
+app.use(bodyParser.json({limit: '50mb'}))
+app.use(bodyParser.urlencoded({extended: false})) // x-www-form-urlenconded
 
 app.use(express.static("build", { root: "." }));
 

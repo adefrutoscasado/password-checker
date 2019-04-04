@@ -5,7 +5,6 @@ import ApiClient from '../helpers/ApiClient'
 export default class Register extends Component {
 
   state = {
-    username: '',
     email: '',
     password: '',
     confirmPassword: ''
@@ -16,7 +15,7 @@ export default class Register extends Component {
   }
 
   handleClick = async () => {
-    await ApiClient.requestRegisterUser(this.state.username, this.state.email, this.state.password, this.state.confirmPassword)
+    await ApiClient.requestRegisterUser(this.state.email, this.state.password, this.state.confirmPassword)
   }
 
   render() {

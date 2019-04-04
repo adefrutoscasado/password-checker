@@ -2,23 +2,13 @@ import Config from '../constants/Config'
 
 export default class ApiClient {
 
-  static async requestRegisterUser (username, email, password, confirmPassword) {
+  static async requestRegisterUser (email, password, confirmPassword) {
     const data = {
-      username,
       email,
       password,
       confirmPassword
     };
     return ApiClient.fetch(Config.api.getPath('/auth/register'), 'POST', data)
-  }
-
-  static async requestLogin (username, email, password) {
-    const data = {
-      username,
-      email,
-      password
-    };
-    return ApiClient.fetch(Config.api.getPath('/auth/login'), 'POST', data)
   }
 
   static async fetch(path, method = 'GET', params = {}) {
@@ -28,7 +18,7 @@ export default class ApiClient {
     const finalUrl = path + '?' + (Math.random() + new Date().getTime());
     
     const requestParams = {
-        method: method,
+        method,
         headers: ApiClient.getHeaders(),
         cache: 'no-cache' //https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch
     };
@@ -36,6 +26,7 @@ export default class ApiClient {
         requestParams.body = JSON.stringify(params);
     }
     response = await fetch(finalUrl, requestParams);
+    console.log(response)
     json = await response.json();
     if (Config.api.SUCCESS_STATUS.includes(response.status) && response.ok) {
         return json;

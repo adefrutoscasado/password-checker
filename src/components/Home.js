@@ -25,6 +25,10 @@ class Home extends Component {
     this.setState({[target.name]: target.value});
   }
 
+  handleClick = () => {
+    this.props.fetchLogin(this.state.email, this.state.password)
+  }
+
   render() {
     return (
       <div>
@@ -47,7 +51,7 @@ class Home extends Component {
             required={true}
           />
         </form>
-        <Button icon labelPosition='right' onClick={this.props.fetchLogin(this.state.email, this.state.password)}>
+        <Button icon labelPosition='right' onClick={this.handleClick}>
           Send
           <Icon name='right arrow' />
         </Button>
