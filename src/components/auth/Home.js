@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import Ranking from './Ranking';
-import AddPassword from './AddPassword';
+import Ranking from '../Ranking';
+import AddPassword from '../AddPassword';
 
 export default class HomeAuth extends Component {
   render() {

@@ -1,31 +1,43 @@
 import React, { Component } from 'react'
 import {Button, Icon} from 'semantic-ui-react'
-import ApiClient from '../helpers/ApiClient'
+import {connect} from 'react-redux'
+import {login} from './actions'
 
-export default class Register extends Component {
+const mapStateToProps = state => ({
+  loggedIn: state.loggedIn,
+  loginError: state.loginError
+})
+
+const mapDispatchToProps = dispatch => {
+  return {
+    login: (email, password) => dispatch(login(email, password))
+  }
+}
+
+class Login extends Component {
 
   state = {
     email: '',
-    password: '',
-    confirmPassword: ''
+    password: ''
   };
 
   handleChange = ({target}) => {
     this.setState({[target.name]: target.value});
   }
 
-  handleClick = async () => {
-    await ApiClient.requestRegisterUser(this.state.email, this.state.password, this.state.confirmPassword)
+  handleClick = () => {
+    this.props.login(this.state.email, this.state.password)
   }
 
   render() {
     return (
       <div>
+        WELCOME TO PASSWORD CHECKER
         <form>
           <input
             type="email"
             name="email"
-            placeholder="Enter your e-mail"
+            placeholder="E-mail"
             value={this.state.email}
             onChange={this.handleChange}
             required={true}
@@ -33,25 +45,19 @@ export default class Register extends Component {
           <input
             type="password"
             name="password"
-            placeholder="New password"
+            placeholder="Password"
             value={this.state.password}
-            onChange={this.handleChange}
-            required={true}
-          />
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm your new password"
-            value={this.state.confirmPassword}
             onChange={this.handleChange}
             required={true}
           />
         </form>
         <Button icon labelPosition='right' onClick={this.handleClick}>
-          Save
+          Send
           <Icon name='right arrow' />
         </Button>
       </div>
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

@@ -1,19 +1,18 @@
-import {DO_LOGIN_REQUEST, DO_LOGIN_COMMIT, DO_LOGIN_ROLLBACK} from '../components/login/action-types';
+import {DO_LOGIN_REQUEST, DO_LOGIN_REQUEST_COMMIT, DO_LOGIN_REQUEST_ROLLBACK} from '../components/noAuth/login/action-types';
+import {initialState as loginInitialState} from '../components/noAuth/login/reducer';
 
-export const initialState = {
-  loggedIn: false,
-  loginError: '',
-  userId: null,
-  access_token: null
+const initialState = {
+  loginInitialState
 };
 
-
-export default function (state = initialState, action) {
+const rootReducer = (state = initialState, action) => {
+  console.log('ACTION', action)
   switch (action.type) {
+    // LOGIN REDUCER
     case DO_LOGIN_REQUEST:
       return state;
 
-    case DO_LOGIN_COMMIT:
+    case DO_LOGIN_REQUEST_COMMIT:
       return {
         ...state,
         loggedIn: true,
@@ -21,7 +20,7 @@ export default function (state = initialState, action) {
         access_token: action.payload.access_token
       }
     
-    case DO_LOGIN_ROLLBACK:
+    case DO_LOGIN_REQUEST_ROLLBACK:
       return {
         ...initialState,
         loggedIn: false,
@@ -32,3 +31,5 @@ export default function (state = initialState, action) {
       return state;
   }
 }
+
+export default rootReducer;

@@ -26,7 +26,6 @@ export default class ApiClient {
         requestParams.body = JSON.stringify(params);
     }
     response = await fetch(finalUrl, requestParams);
-    console.log(response)
     json = await response.json();
     if (Config.api.SUCCESS_STATUS.includes(response.status) && response.ok) {
         return json;
