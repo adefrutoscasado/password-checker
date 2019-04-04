@@ -1,13 +1,15 @@
-import {DO_LOGIN_REQUEST, DO_LOGIN_COMMIT, DO_LOGIN_ROLLBACK} from '../components/login/action-types';
+import {DO_LOGIN_REQUEST, DO_LOGIN_COMMIT, DO_LOGIN_ROLLBACK} from './action-types';
 
-const initialState = {
+export const initialState = {
   loggedIn: false,
   loginError: '',
   userId: null,
   access_token: null
 };
 
-function rootReducer (state = initialState, action) {
+export const name = 'login';
+
+export default function (state = initialState, action) {
   switch (action.type) {
     case DO_LOGIN_REQUEST:
       return state;

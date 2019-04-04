@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import Login from './Login';
+import Login from './login/Login';
 import Register from './Register';
 
 export default class HomeNoAuth extends Component {

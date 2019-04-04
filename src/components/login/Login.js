@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {Button, Icon} from 'semantic-ui-react'
 import {connect} from 'react-redux'
-import {fetchLogin} from '../redux/actions'
+import {fetchLogin} from './actions'
 
 const mapStateToProps = state => ({
   loggedIn: state.loggedIn,
