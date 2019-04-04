@@ -47,7 +47,7 @@ function fetchAsyncMiddleware({dispatch, getState}) {
       })
     })
     .catch(error => {
-      
+      console.log(error)
     })
   }
 }
