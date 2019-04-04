@@ -10,7 +10,7 @@ import HomeAuth from './components/auth/Home';
 import {connect} from 'react-redux';
 
 const mapStateToProps = state => ({
-  loggedIn: state.loggedIn
+  loggedIn: state.login.loggedIn
 })
 
 class App extends Component {

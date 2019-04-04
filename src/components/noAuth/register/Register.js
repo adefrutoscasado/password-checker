@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 import {Button, Icon} from 'semantic-ui-react'
-import ApiClient from '../../../helpers/ApiClient'
 import {registerUser} from './actions';
 import {connect} from 'react-redux';
+import {DO_REGISTER_REQUEST} from './action-types';
 
-const mapStateToProps = state => ({
-  loggedIn: state.loggedIn,
-  loginError: state.loginError
-})
+const mapStateToProps = state => {
+  return {
+    isFetching: state.isFetching.isFetching,
+    results: state.isFetching.results[DO_REGISTER_REQUEST]
+  }
+}
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -20,7 +22,8 @@ class Register extends Component {
   state = {
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    sending: false
   };
 
   handleChange = ({target}) => {
@@ -28,7 +31,17 @@ class Register extends Component {
   }
 
   handleClick = async () => {
-    await ApiClient.requestRegisterUser(this.state.email, this.state.password, this.state.confirmPassword)
+    this.setState({sending: true})
+    this.props.registerUser(this.state.email, this.state.password, this.state.confirmPassword)
+  }
+
+  componentDidUpdate() {
+    const currentSending = this.props.isFetching.includes(DO_REGISTER_REQUEST);
+    if (this.state.sending !== currentSending) {
+      if (this.props.results) {
+      }
+      this.setState({sending: currentSending});
+    }
   }
 
   render() {

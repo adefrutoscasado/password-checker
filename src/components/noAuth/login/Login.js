@@ -4,8 +4,8 @@ import {connect} from 'react-redux'
 import {login} from './actions'
 
 const mapStateToProps = state => ({
-  loggedIn: state.loggedIn,
-  loginError: state.loginError
+  loggedIn: state.login.loggedIn,
+  loginError: state.login.loginError
 })
 
 const mapDispatchToProps = dispatch => {

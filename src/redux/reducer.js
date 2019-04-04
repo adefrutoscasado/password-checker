@@ -1,35 +1,15 @@
-import {DO_LOGIN_REQUEST, DO_LOGIN_REQUEST_COMMIT, DO_LOGIN_REQUEST_ROLLBACK} from '../components/noAuth/login/action-types';
-import {initialState as loginInitialState} from '../components/noAuth/login/reducer';
+import login from '../components/noAuth/login/reducer';
+import isFetching from '../components/redux-is-fetching/reducer';
+import { combineReducers } from '../../../../../AppData/Local/Microsoft/TypeScript/3.0/node_modules/redux';
 
-const initialState = {
-  loginInitialState
-};
+const appReducer = combineReducers({
+  login,
+  isFetching
+});
 
-const rootReducer = (state = initialState, action) => {
+const rootReducer = (state, action) => {
   console.log('ACTION', action)
-  switch (action.type) {
-    // LOGIN REDUCER
-    case DO_LOGIN_REQUEST:
-      return state;
-
-    case DO_LOGIN_REQUEST_COMMIT:
-      return {
-        ...state,
-        loggedIn: true,
-        userId: action.payload.id,
-        access_token: action.payload.access_token
-      }
-    
-    case DO_LOGIN_REQUEST_ROLLBACK:
-      return {
-        ...initialState,
-        loggedIn: false,
-        loginError: action.payload.message
-      }
-    
-    default:
-      return state;
-  }
+  return appReducer(state, action)
 }
 
 export default rootReducer;
