@@ -1,8 +1,21 @@
 import React, { Component } from 'react'
 import {Button, Icon} from 'semantic-ui-react'
 import ApiClient from '../../../helpers/ApiClient'
+import {registerUser} from './actions';
+import {connect} from 'react-redux';
 
-export default class Register extends Component {
+const mapStateToProps = state => ({
+  loggedIn: state.loggedIn,
+  loginError: state.loginError
+})
+
+const mapDispatchToProps = dispatch => {
+  return {
+    registerUser: (email, password, confirmPassword) => dispatch(registerUser(email, password, confirmPassword))
+  }
+}
+
+class Register extends Component {
 
   state = {
     email: '',
@@ -55,3 +68,5 @@ export default class Register extends Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register)

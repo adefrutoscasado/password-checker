@@ -1,3 +1,3 @@
-export const DO_REGISTER_REQUEST = "DO_REGISTER_REQUEST";
-export const DO_REGISTER_COMMIT = "DO_REGISTER_COMMIT";
-export const DO_REGISTER_ROLLBACK = "DO_REGISTER_ROLLBACK";
+import { getActionsNames } from '../../redux-is-fetching/action-types';
+
+export const [DO_REGISTER_REQUEST, DO_REGISTER_REQUEST_COMMIT, DO_REGISTER_REQUEST_ROLLBACK] = getActionsNames('Register/DO_REGISTER');
