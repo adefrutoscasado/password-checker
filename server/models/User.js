@@ -1,6 +1,5 @@
 const { Model } = require('objection')
 const bcrypt = require('bcrypt');
-const jwt = require('express-jwt');
 
 const knexConnection = require('./../services/knexConnection')
 Model.knex(knexConnection)
@@ -18,7 +17,7 @@ class User extends unique(Model) {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ["username", "password"],
+      required: ['username', 'password'],
       properties: {
         id: { type: 'integer' },
         username: { type: 'string' },
@@ -27,17 +26,32 @@ class User extends unique(Model) {
     }
   }
 
+  static get relationMappings() {
+    const { UserPlatform } = require('./');
+    console.log(UserPlatform);
+    return {
+      platforms: {
+        relation: Model.HasManyRelation,
+        modelClass: UserPlatform,
+        join: {
+          from: 'user.id',
+          to: 'user_platform.user_id'
+        }
+      },
+    };
+  }
+
   static async getByUsername(username) {
-    return await this.query().where("username", username).first()
+    return await this.query().where('username', username).first()
   }
 
 
   async $afterGet(queryContext) {
-    if (this.password) this.password = this.password.replace(/^\$2y(.+)$/i, '\$2a$1')
+    if (this.password) this.password = this.password.replace(/^\$2y(.+)$/i, '\$2b$1')
   }
 
   async $beforeSave(queryContext, old) {
-    this.password = bcrypt.hashSync(this.password, 14).replace(/^\$2a(.+)$/i, '\$2y$1')
+    this.password = bcrypt.hashSync(this.password, 14).replace(/^\$2b(.+)$/i, '\$2y$1')
   }
 
   async $beforeInsert(queryContext) {
