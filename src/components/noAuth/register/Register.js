@@ -13,34 +13,48 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    registerUser: (email, password, confirmPassword) => dispatch(registerUser(email, password, confirmPassword))
+    registerUser: (username, password, confirmPassword) => dispatch(registerUser(username, password, confirmPassword))
   }
 }
 
 class Register extends Component {
 
   state = {
-    email: '',
+    username: '',
     password: '',
     confirmPassword: '',
-    sending: false
+    sending: false,
+    message: ''
   };
 
   handleChange = ({target}) => {
-    this.setState({[target.name]: target.value});
+    this.setState({[target.name]: target.value, message:''});
   }
 
   handleClick = async () => {
     this.setState({sending: true})
-    this.props.registerUser(this.state.email, this.state.password, this.state.confirmPassword)
+    this.props.registerUser(this.state.username, this.state.password, this.state.confirmPassword)
   }
 
   componentDidUpdate() {
     const currentSending = this.props.isFetching.includes(DO_REGISTER_REQUEST);
     if (this.state.sending !== currentSending) {
-      if (this.props.results) {
+      if (this.props.results && this.props.results.message) {
+        this.setState({message: this.props.results.message})
       }
       this.setState({sending: currentSending});
+    }
+  }
+
+  _renderMessage(){
+    if (this.state.message) {
+      return (
+        <div>
+          {this.state.message}
+        </div>
+      )
+    } else {
+      return null
     }
   }
 
@@ -49,10 +63,10 @@ class Register extends Component {
       <div>
         <form>
           <input
-            type="email"
-            name="email"
-            placeholder="Enter your e-mail"
-            value={this.state.email}
+            type="text"
+            name="username"
+            placeholder="Enter your new username"
+            value={this.state.username}
             onChange={this.handleChange}
             required={true}
           />
@@ -77,6 +91,7 @@ class Register extends Component {
           Save
           <Icon name='right arrow' />
         </Button>
+        {this._renderMessage()}
       </div>
     )
   }

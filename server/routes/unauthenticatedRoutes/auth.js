@@ -7,21 +7,25 @@ const { User } = require('./../../models')
 
 router.post('/register', asyncWrap( async (req, res, next) => {
   let data = req.body
-  let user = await User.query().insertAndFetch(data)
+  if (data.password !== data.confirmPassword) throw new Error('Confirm password does not match')
+  let userExists = await User.getByUsername(data.username)
+  if (userExists) throw new Error('User already exists')
+  let user = await User.query().insertAndFetch({username: data.username, password: data.password})
   res.status(201).json(
     {
       message: 'User created',
       user: {
         id: user.id,
-        email: user.email
+        username: user.username
       }
     }
   );
 }));
 
 router.post('/login', asyncWrap( async (req, res, next) => {
-  let { email, password } = req.body
-  let user = await User.getByEmail(email)
+  let { username, password } = req.body
+  let user = await User.getByUsername(username)
+  if (!user) throw new Error ('User does not exist!!')
   let success = user.checkCredentials(password)
   if (!success) throw Error('Invalid credentials')
 

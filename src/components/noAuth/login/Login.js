@@ -10,14 +10,14 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: (email, password) => dispatch(login(email, password))
+    login: (username, password) => dispatch(login(username, password))
   }
 }
 
 class Login extends Component {
 
   state = {
-    email: '',
+    username: '',
     password: ''
   };
 
@@ -26,7 +26,19 @@ class Login extends Component {
   }
 
   handleClick = () => {
-    this.props.login(this.state.email, this.state.password)
+    this.props.login(this.state.username, this.state.password)
+  }
+
+  _renderError(){
+    if (this.props.loginError) {
+      return (
+        <div>
+          {this.props.loginError}
+        </div>
+      )
+    } else {
+      return null
+    }
   }
 
   render() {
@@ -35,10 +47,10 @@ class Login extends Component {
         WELCOME TO PASSWORD CHECKER
         <form>
           <input
-            type="email"
-            name="email"
-            placeholder="E-mail"
-            value={this.state.email}
+            type="text"
+            name="username"
+            placeholder="Username"
+            value={this.state.username}
             onChange={this.handleChange}
             required={true}
           />
@@ -55,6 +67,7 @@ class Login extends Component {
           Send
           <Icon name='right arrow' />
         </Button>
+        {this._renderError()}
       </div>
     )
   }

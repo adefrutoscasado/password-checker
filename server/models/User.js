@@ -6,7 +6,7 @@ const knexConnection = require('./../services/knexConnection')
 Model.knex(knexConnection)
 
 const unique = require('objection-unique')({
-  fields: ['email'],
+  fields: ['username'],
   identifiers: ['id']
 });
 
@@ -18,17 +18,17 @@ class User extends unique(Model) {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ["email", "password"],
+      required: ["username", "password"],
       properties: {
         id: { type: 'integer' },
-        email: { type: 'string' },
+        username: { type: 'string' },
         password: { type: 'string', minLength: 8 }
       }
     }
   }
 
-  static async getByEmail(email) {
-    return await this.query().where("email", email).first()
+  static async getByUsername(username) {
+    return await this.query().where("username", username).first()
   }
 
 
