@@ -5,7 +5,6 @@ exports.up = function(knex, Promise) {
       table.increments()
       table.integer('user_id')
       table.integer('platform_id')
-      table.integer('password')
     })
   ])
 }

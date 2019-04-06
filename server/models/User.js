@@ -28,9 +28,8 @@ class User extends unique(Model) {
 
   static get relationMappings() {
     const { UserPlatform } = require('./');
-    console.log(UserPlatform);
     return {
-      platforms: {
+      user_platforms: {
         relation: Model.HasManyRelation,
         modelClass: UserPlatform,
         join: {

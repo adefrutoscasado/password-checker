@@ -36,7 +36,8 @@
     "eject": "react-scripts eject",
     "serve": "node ./server/bin/www",
     "migrate:latest": "knex migrate:latest",
-    "migrate:rollback": "knex migrate:rollback"
+    "migrate:rollback": "knex migrate:rollback",
+    "seed:run": "knex seed:run --env development"
   },
   "eslintConfig": {
     "extends": "react-app"

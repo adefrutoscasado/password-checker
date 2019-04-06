@@ -1,14 +1,20 @@
 const jwt = require('express-jwt')
 const express = require('express')
-const asyncWrap = require('./../../helpers/asyncWrap')
 const router = express.Router({mergeParams: true})
-const jwtService = require('./../../services/jwtService')
 
+const asyncWrap = require('./../../helpers/asyncWrap')
+const jwtService = require('./../../services/jwtService')
 const { User } = require('./../../models')
 
 
-router.get('/user/:id', asyncWrap( async (req, res, next) => {
-  let user = await User.query().eager('platforms.[platform,passwords]').where('id', req.params.id).first()
+// localhost:3010/users?eager=user_platforms.[platform,passwords]
+router.get('/users/:id', asyncWrap( async (req, res, next) => {
+  let user = await User
+    .query()
+    .allowEager('user_platforms.[platform,passwords]')
+    .eager(req.query.eager)
+    .findById(req.params.id)
+  // TODO: Remove hashed passwords from response
   res.send(user)
 }));
 

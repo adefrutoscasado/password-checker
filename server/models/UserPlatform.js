@@ -12,7 +12,7 @@ class UserPlatform extends Model {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ["user_id", "platform_id"],
+      required: ['user_id', 'platform_id'],
       properties: {
         id: { type: 'integer' },
         user_id: { type: 'integer' },
@@ -23,21 +23,20 @@ class UserPlatform extends Model {
 
   static get relationMappings() {
     const { Password, Platform } = require('./');
-    console.log(Password);
     return {
       passwords: {
         relation: Model.HasManyRelation,
         modelClass: Password,
         join: {
           from: 'user_platform.id',
-          to: 'password.platform_id'
+          to: 'password.user_platform_id'
         }
       },
       platform: {
         relation: Model.BelongsToOneRelation,
         modelClass: Platform,
         join: {
-          from: 'user_platform.user_platform_id',
+          from: 'user_platform.platform_id',
           to: 'platform.id'
         }
       },

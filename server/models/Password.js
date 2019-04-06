@@ -17,7 +17,7 @@ class Password extends unique(Model) {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ["name"],
+      required: ['name'],
       properties: {
         id: { type: 'integer' },
         name: { type: 'string' },
