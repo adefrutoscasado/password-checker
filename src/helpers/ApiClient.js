@@ -20,7 +20,7 @@ export default class ApiClient {
             password,
             score,
         };
-        return ApiClient.fetch(Config.api.getPath(`/users/${userId}/platform/${platformId}/password`), 'POST', data)
+        return ApiClient.fetch(Config.api.getPath(`/users/${userId}/platforms/${platformId}/password`), 'POST', data)
     }
 
     static async fetch(path, method = 'GET', params = {}) {

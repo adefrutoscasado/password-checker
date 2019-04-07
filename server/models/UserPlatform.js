@@ -12,7 +12,7 @@ class UserPlatform extends Model {
   static get jsonSchema() {
     return {
       type: 'object',
-      // required: ['user_id', 'platform_id'],
+      required: ['user_id', 'platform_id'],
       properties: {
         id: { type: 'integer' },
         user_id: { type: 'integer' },
@@ -42,6 +42,12 @@ class UserPlatform extends Model {
       },
     };
   }
+
+  $beforeValidate(jsonSchema, json, opt) {
+    if (isInt(json.user_id)) json.user_id = parseInt(json.user_id)
+    if (isInt(json.platform_id)) json.platform_id = parseInt(json.platform_id)
+  }
+
 }
 
 module.exports = UserPlatform

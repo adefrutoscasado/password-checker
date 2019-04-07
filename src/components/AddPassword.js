@@ -37,7 +37,7 @@ class AddPassword extends Component {
     // this.setState({sending: true})
     ApiClient.requestSubmitPassword(this.props.userId, this.state.platformId, this.state.password, this.state.score)
       .then(() => {
-        window.alert('Score regsitrado!');
+        window.alert('Score registrado!');
       })
       .catch((err) => {
         console.log(err);
