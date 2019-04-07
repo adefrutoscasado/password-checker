@@ -8,7 +8,7 @@ export default class HeaderAuth extends Component {
         <nav>
           <ul>
             <li><Link to='/ranking'>Ranking</Link></li>
-            <li><Link to='/addPassword'>Add new password</Link></li>
+            <li><Link to='/add-password'>Add new password</Link></li>
           </ul>
         </nav>
       </header>

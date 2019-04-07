@@ -11,7 +11,7 @@ export default class HomeAuth extends Component {
         <Switch>
           <Route exact path='/' component={Ranking}/>
           <Route path='/ranking' component={Ranking}/>
-          <Route path='/addPassword' component={AddPassword}/>
+          <Route path='/add-password' component={AddPassword}/>
         </Switch>
       </main>
     )

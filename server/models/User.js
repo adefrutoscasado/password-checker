@@ -17,7 +17,7 @@ class User extends unique(Model) {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['username', 'password'],
+      // required: ['username', 'password'],
       properties: {
         id: { type: 'integer' },
         username: { type: 'string' },
@@ -65,6 +65,10 @@ class User extends unique(Model) {
 
   checkCredentials(password) {
     return bcrypt.compareSync(password, this.password); // (plain text, hash)
+  }
+
+  getPlatform(platform_id) {
+    return this.user_platforms.find(u_p => u_p.platform_id === platform_id)
   }
 }
 

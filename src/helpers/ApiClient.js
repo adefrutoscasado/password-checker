@@ -11,6 +11,18 @@ export default class ApiClient {
     return ApiClient.fetch(Config.api.getPath('/auth/register'), 'POST', data)
     }
 
+    static async requestGetPlatforms () {
+        return ApiClient.fetch(Config.api.getPath('/platforms'), 'GET')
+    }
+
+    static async requestSubmitPassword (userId, platformId, password, score) {
+        const data = {
+            password,
+            score,
+        };
+        return ApiClient.fetch(Config.api.getPath(`/users/${userId}/platform/${platformId}/password`), 'POST', data)
+    }
+
     static async fetch(path, method = 'GET', params = {}) {
     let response;
     let json;

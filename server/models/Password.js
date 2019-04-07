@@ -4,12 +4,7 @@ const bcrypt = require('bcrypt');
 const knexConnection = require('./../services/knexConnection')
 Model.knex(knexConnection)
 
-const unique = require('objection-unique')({
-  fields: ['name'],
-  identifiers: ['id']
-});
-
-class Password extends unique(Model) {
+class Password extends Model {
   static get tableName() {
     return 'password'
   }
@@ -17,10 +12,12 @@ class Password extends unique(Model) {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['name'],
+      required: ['password', 'score'],
       properties: {
         id: { type: 'integer' },
-        name: { type: 'string' },
+        user_platform: { type: 'integer' },
+        password: { type: 'string' },
+        score: { type: 'integer' },
       }
     }
   }

@@ -1,6 +1,6 @@
 import login from '../components/noAuth/login/reducer';
 import isFetching from '../components/redux-is-fetching/reducer';
-import { combineReducers } from '../../../../../AppData/Local/Microsoft/TypeScript/3.0/node_modules/redux';
+import { combineReducers } from 'redux';
 
 const appReducer = combineReducers({
   login,
