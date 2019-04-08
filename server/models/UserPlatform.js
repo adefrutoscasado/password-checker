@@ -9,6 +9,15 @@ class UserPlatform extends Model {
     return 'user_platform'
   }
 
+  static get virtualAttributes() {
+    return ['platform_score'];
+  }
+
+  get platform_score() {
+    let platformScore = this.getLastPlatformScore()
+    return platformScore
+  }
+
   static get jsonSchema() {
     return {
       type: 'object',
@@ -48,6 +57,9 @@ class UserPlatform extends Model {
     if (isInt(json.platform_id)) json.platform_id = parseInt(json.platform_id)
   }
 
+  getLastPlatformScore() {
+    return this.passwords[this.passwords.length-1].score
+  }
 }
 
 module.exports = UserPlatform

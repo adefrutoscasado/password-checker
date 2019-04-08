@@ -1,6 +1,6 @@
 const jwt = require('express-jwt')
 const express = require('express')
-const router = express.Router({mergeParams: true})
+const router = express.Router({ mergeParams: true })
 
 const asyncWrap = require('./../../helpers/asyncWrap')
 const jwtService = require('./../../services/jwtService')
@@ -8,7 +8,7 @@ const { User, Platform, Password } = require('./../../models')
 
 
 // localhost:3010/users?eager=user_platforms.[platform,passwords]
-router.get('/users/:userId', asyncWrap( async (req, res, next) => {
+router.get('/users/:userId', asyncWrap(async (req, res, next) => {
   let user = await User
     .query()
     .allowEager('user_platforms.[platform,passwords]')
@@ -19,12 +19,12 @@ router.get('/users/:userId', asyncWrap( async (req, res, next) => {
 }));
 
 // localhost:3010/platforms
-router.get('/platforms', asyncWrap( async (req, res, next) => {
+router.get('/platforms', asyncWrap(async (req, res, next) => {
   let platforms = await Platform.query()
   res.send(platforms)
 }));
 
-router.post('/users/:userId/platforms/:platformId/password', asyncWrap( async (req, res, next) => {
+router.post('/users/:userId/platforms/:platformId/password', asyncWrap(async (req, res, next) => {
   let { password, score } = req.body
   let platformId = parseInt(req.params.platformId)
   let userId = parseInt(req.params.userId)
@@ -38,13 +38,21 @@ router.post('/users/:userId/platforms/:platformId/password', asyncWrap( async (r
   if (!userPlatform)
     userPlatform = await user
       .$relatedQuery('user_platforms')
-      .insertAndFetch({platform_id: platformId})
+      .insertAndFetch({ platform_id: platformId })
 
   let passwordCreated = await Password
     .query()
-    .insertAndFetch({user_platform_id: userPlatform.id, password, score})
+    .insertAndFetch({ user_platform_id: userPlatform.id, password, score })
 
   res.send(passwordCreated)
+}));
+
+router.get('/ranking', asyncWrap(async (req, res, next) => {
+  let users = await User
+    .query()
+    .eager('user_platforms.[platform,passwords]')
+
+  res.send(users)
 }));
 
 router.use(async (req, res, next) => {
@@ -55,11 +63,11 @@ router.use(async (req, res, next) => {
       requestProperty: 'auth'
     })(req, res, next)
   }
-  next (new Error('Invalid token'))
+  next(new Error('Invalid token'))
 })
 
-router.get('/validateToken', asyncWrap( async (req, res, next) => {
-  res.send({message: 'ok'})
+router.get('/validateToken', asyncWrap(async (req, res, next) => {
+  res.send({ message: 'ok' })
 }));
 
 module.exports = router;

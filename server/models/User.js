@@ -14,6 +14,15 @@ class User extends unique(Model) {
     return 'user'
   }
 
+  static get virtualAttributes() {
+    return ['total_score'];
+  }
+
+  get total_score() {
+    let totalScore = 1234567890
+    return totalScore
+  }
+
   static get jsonSchema() {
     return {
       type: 'object',
