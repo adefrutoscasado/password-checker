@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import zxcvbn from 'zxcvbn';
-import PropTypes from 'prop-types';
+import { Input } from 'semantic-ui-react'
 
 const isTooShort = (password, minLength) => password.length < minLength;
 
@@ -11,19 +11,6 @@ export default class ReactPasswordStrength extends Component {
     super(props);
     this.scoreRef = React.createRef();
   }
-  // static propTypes = {
-  //   changeCallback: PropTypes.func,
-  //   className: PropTypes.string,
-  //   defaultValue: PropTypes.string,
-  //   inputProps: PropTypes.object,
-  //   minLength: PropTypes.number,
-  //   minScore: PropTypes.number,
-  //   namespaceClassName: PropTypes.string,
-  //   scoreWords: PropTypes.array,
-  //   style: PropTypes.object,
-  //   tooShortWord: PropTypes.string,
-  //   userInputs: PropTypes.array,
-  // }
 
   static defaultProps = {
     changeCallback: null,
@@ -67,19 +54,9 @@ export default class ReactPasswordStrength extends Component {
     });
   }
 
-  scoreChanged() {
-    console.log('score chnaged')
-  }
-
-  // TODO: Review this, please
-  virtualScoreInput() {
-    return this.scoreRef.current
-  }
-
-  handleChange = ({target}) => {
-    console.log(target)
+  handleChange = ({ target }) => {
     const { changeCallback, minScore, userInputs, minLength } = this.props;
-    const password = this.reactPasswordStrengthInput.value;
+    const password = target.value;
 
     let score = 0;
     let result = null;
@@ -100,9 +77,9 @@ export default class ReactPasswordStrength extends Component {
         changeCallback(this.state, result);
       }
     });
-    
+
     this.props.fireChange(target)
-    this.props.fireChange(this.virtualScoreInput())
+    this.props.fireChange(this.scoreRef.current)
   }
 
   render() {
@@ -117,7 +94,7 @@ export default class ReactPasswordStrength extends Component {
       tooShortWord,
     } = this.props;
 
-    const inputClasses = [ `${namespaceClassName}-input` ];
+    const inputClasses = [`${namespaceClassName}-input`];
     const wrapperClasses = [
       namespaceClassName,
       className ? className : '',
@@ -125,8 +102,8 @@ export default class ReactPasswordStrength extends Component {
     ];
     const strengthDesc = (
       isTooShort(password, minLength)
-      ? tooShortWord
-      : scoreWords[score]
+        ? tooShortWord
+        : scoreWords[score]
     );
 
     if (isValid === true) {
@@ -141,7 +118,7 @@ export default class ReactPasswordStrength extends Component {
 
     return (
       <div className={wrapperClasses.join(' ')} style={style}>
-        <input
+        <Input
           name="password"
           type="password"
           {...inputProps}
