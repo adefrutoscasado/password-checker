@@ -26,7 +26,7 @@ class User extends unique(Model) {
   static get jsonSchema() {
     return {
       type: 'object',
-      // required: ['username', 'password'],
+      required: ['username', 'password'],
       properties: {
         id: { type: 'integer' },
         username: { type: 'string' },

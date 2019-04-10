@@ -51,6 +51,7 @@ class AddPassword extends Component {
           Check your password strength
           <PasswordStrength fireChange={(target) => this.handleChange({target})}></PasswordStrength>
           <select name='platformId' onChange={this.handleChange}>
+          <option>{'Selecciona una plataforma'}</option>
             {this.state.platforms.map(p =>
               <option key={p.id} value={p.id}>{p.name}</option>
             )}
