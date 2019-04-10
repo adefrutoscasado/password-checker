@@ -19,7 +19,7 @@ class User extends unique(Model) {
   }
 
   get total_score() {
-    let totalScore = 1234567890
+    let totalScore = 1234567890 + parseInt(this.id)
     return totalScore
   }
 

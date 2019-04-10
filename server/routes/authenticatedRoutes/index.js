@@ -1,7 +1,6 @@
 const jwt = require('express-jwt')
 const express = require('express')
 const router = express.Router({ mergeParams: true })
-
 const asyncWrap = require('./../../helpers/asyncWrap')
 const jwtService = require('./../../services/jwtService')
 const { User, Platform, Password } = require('./../../models')
@@ -52,6 +51,7 @@ router.get('/ranking', asyncWrap(async (req, res, next) => {
     .query()
     .eager('user_platforms.[platform,passwords]')
 
+  users.sort((userA, userB) => userB.total_score - userA.total_score);
   res.send(users)
 }));
 
