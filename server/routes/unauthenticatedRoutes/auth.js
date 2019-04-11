@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router({mergeParams: true})
+const jwt = require('jsonwebtoken')
 
 const jwtService = require('./../../services/jwtService')
 const asyncWrap = require('./../../helpers/asyncWrap')
@@ -31,13 +32,43 @@ router.post('/login', asyncWrap( async (req, res, next) => {
 
   let payload = {id: user.id}
   let accessToken = await jwtService.generateAccessToken(req, payload)
+  let refreshToken = await jwtService.generateRefreshToken(req, payload)
   res.json(
     {
       ...payload,
-      access_token: accessToken
+      access_token: accessToken,
+      refresh_token: refreshToken
     }
   );
 }));
 
+router.post('/refresh', asyncWrap(async (req, res) => {
+  if(!((req.body).hasOwnProperty('refresh_token'))){
+    throw new Error('Invalid token')
+  }
+  const refreshToken = req.body.refresh_token
+  let tokenData
+  jwt.verify(refreshToken, req.app.get('REFRESH_JWT_SECRET'), (err, decoded) => {
+    if(err) {
+      throw new Error(err.message)
+    } else {
+      tokenData = decoded
+    }
+  })
+
+  const payload = {
+    id: tokenData.id
+  }
+  let accessToken = await jwtService.generateAccessToken(req, payload)
+  let newRefreshToken = await jwtService.generateRefreshToken(req, payload)
+  res.json(
+    {
+      ...payload,
+      access_token: accessToken,
+      refresh_token: newRefreshToken
+    }
+  );
+
+}));
 
 module.exports = router;

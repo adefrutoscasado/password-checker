@@ -3,6 +3,7 @@ import rootReducer from './reducer';
 import thunk from 'redux-thunk';
 import {persistStore, persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import {refreshToken} from '../components/noAuth/login/actions';
 
 const persistConfig = {
   key: 'root',
@@ -60,8 +61,12 @@ function fetchAsyncMiddleware({dispatch, getState}) {
         return Promise.resolve(getState());
       }
       getResponseBody(res).then(error => {
-        dispatch({type: rollbackType, payload: error});
-        return Promise.reject(error);
+        if(res.status === 401) {
+          dispatch(refreshToken(loginState.refresh_token))
+        } else {
+          dispatch({type: rollbackType, payload: error});
+          return Promise.reject(error);
+        }
       })
     })
     .catch(error => {

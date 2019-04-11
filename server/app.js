@@ -5,10 +5,12 @@ const helmet = require('helmet')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 process.env.JWT_SECRET = process.env.JWT_SECRET || 'TEMP_SECRET'
+process.env.REFRESH_JWT_SECRET = process.env.REFRESH_JWT_SECRET || 'TEMP_REFRESH_SECRET'
 
 var app = express();
 
 app.set('JWT_SECRET', process.env.JWT_SECRET)
+app.set('REFRESH_JWT_SECRET', process.env.REFRESH_JWT_SECRET)
 
 app.use(logger("dev"));
 app.use(express.json());

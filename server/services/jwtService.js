@@ -4,8 +4,15 @@ const jwt = require('jsonwebtoken')
 let generateAccessToken = (req, payload) => {
   return jwt.sign({ 
     ...payload,
-    expiresIn: '1h',
+    expiresIn: '30s',
   }, req.app.get('JWT_SECRET'));
+}
+
+let generateRefreshToken = (req, payload) => {
+  return jwt.sign({
+    ...payload,
+    expiresIn: '30 days',
+  }, req.app.get('REFRESH_JWT_SECRET'));
 }
 
 function getBearerToken(req) {
@@ -44,4 +51,4 @@ function getBearerToken(req) {
   }
 }
 
-module.exports = {generateAccessToken, getBearerToken}
+module.exports = {generateAccessToken, getBearerToken, generateRefreshToken}

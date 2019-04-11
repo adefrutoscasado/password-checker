@@ -13,7 +13,7 @@ router.use(async (req, res, next) => {
       requestProperty: 'auth'
     })(req, res, next)
   }
-  next(new Error('Invalid token'))
+  res.status(401).send(new Error('Invalid token'))
 })
 
 // localhost:3010/users?eager=user_platforms.[platform,passwords]

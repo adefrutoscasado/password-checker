@@ -109,7 +109,7 @@ class Register extends Component {
                   onChange={this.handleChange} 
                 />
                 {this._renderMessage()}
-                <Button icon labelPosition='right' onClick={this.handleClick}>
+                <Button icon labelPosition='right' onClick={this.handleClick} loading={this.state.sending}>
                   Sign up
                   <Icon name='right arrow' />
                 </Button>
