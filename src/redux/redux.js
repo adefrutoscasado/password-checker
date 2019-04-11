@@ -1,6 +1,15 @@
 import {createStore, applyMiddleware, compose} from 'redux';
 import rootReducer from './reducer';
 import thunk from 'redux-thunk';
+import {persistStore, persistReducer} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+const persistConfig = {
+  key: 'root',
+  storage
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 function tryParseJSON(json) {
   if (!json) {
@@ -64,6 +73,8 @@ const getHeaders = (options = {}) => {
 // https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(fetchAsyncMiddleware, thunk)));
+const store = createStore(persistedReducer, composeEnhancers(applyMiddleware(fetchAsyncMiddleware, thunk)));
 
-export default store;
+export default () => {
+  return {store, persistor: persistStore(store)};
+};

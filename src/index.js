@@ -4,19 +4,21 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {Provider} from 'react-redux';
-import redux from './redux/redux';
+import configureStore from './redux/redux';
+import {PersistGate} from 'redux-persist/integration/react';
 import 'semantic-ui-css/semantic.min.css';
-
-
-// ReactDOM.render(<App />, document.getElementById('root'));
 
 import { BrowserRouter } from 'react-router-dom';
 
+const {store, persistor} = configureStore()
+
 ReactDOM.render((
-  <Provider store={redux}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </PersistGate>
   </Provider>
 ), document.getElementById('root'));
 
