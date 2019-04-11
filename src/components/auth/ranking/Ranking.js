@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Table, Accordion, Header} from 'semantic-ui-react'
+import {Table, Accordion, Header, Icon} from 'semantic-ui-react'
 import ApiClient from '../../../helpers/ApiClient'
 
 export default class Ranking extends Component {
@@ -26,6 +26,15 @@ export default class Ranking extends Component {
       });
   }
 
+  _renderWinner(rank) {
+    if (rank === 1) {
+      return (
+        <Icon name='hand spock outline' />
+      )
+    }
+    return null
+  }
+
   render() {
     let rank = 0;
     return (
@@ -37,15 +46,15 @@ export default class Ranking extends Component {
           <Table celled>
             <Table.Header>
               <Table.Row>
-                <Table.HeaderCell>RANK</Table.HeaderCell>
-                <Table.HeaderCell>USERNAME</Table.HeaderCell>
-                <Table.HeaderCell>SCORE</Table.HeaderCell>
+                <Table.HeaderCell textAlign='center'>RANK</Table.HeaderCell>
+                <Table.HeaderCell textAlign='center'>USERNAME</Table.HeaderCell>
+                <Table.HeaderCell textAlign='center'>SCORE</Table.HeaderCell>
               </Table.Row>
             </Table.Header>
               <Table.Body>
                 {this.state.ranking.map(user =>
                   <Table.Row>
-                    <Table.Cell>{rank = rank + 1}</Table.Cell>
+                    <Table.Cell textAlign='center'>{rank = rank + 1} {this._renderWinner(rank)}</Table.Cell>
                     <Table.Cell>
                       <Accordion 
                         defaultActiveIndex={1} 
@@ -56,15 +65,15 @@ export default class Ranking extends Component {
                             <div>
                               <Table.Header>
                                 <Table.Row>
-                                  <Table.HeaderCell>Platform Name</Table.HeaderCell>
-                                  <Table.HeaderCell>Score</Table.HeaderCell>
+                                  <Table.HeaderCell textAlign='center'>Platform Name</Table.HeaderCell>
+                                  <Table.HeaderCell textAlign='center'>Score</Table.HeaderCell>
                                 </Table.Row>
                               </Table.Header>
                               <Table.Body>
                                 {user.user_platforms.map(p =>
                                   <Table.Row>
-                                  <Table.Cell>{p.platform.name}</Table.Cell>
-                                  <Table.Cell>{p.platform_score}</Table.Cell>
+                                  <Table.Cell textAlign='center'>{p.platform.name}</Table.Cell>
+                                  <Table.Cell textAlign='center'>{p.platform_score}</Table.Cell>
                                   </Table.Row>
                                 )}
                               </Table.Body>
@@ -72,7 +81,7 @@ export default class Ranking extends Component {
                           }
                         }]} styled/>
                     </Table.Cell>
-                    <Table.Cell>{user.total_score}</Table.Cell>
+                    <Table.Cell textAlign='center'>{user.total_score}</Table.Cell>
                   </Table.Row>
                 )}
               </Table.Body>

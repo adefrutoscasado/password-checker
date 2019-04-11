@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import zxcvbn from 'zxcvbn';
-import { Input } from 'semantic-ui-react'
+import { Form } from 'semantic-ui-react'
 
 const isTooShort = (password, minLength) => password.length < minLength;
 
@@ -118,7 +118,7 @@ export default class ReactPasswordStrength extends Component {
 
     return (
       <div className={wrapperClasses.join(' ')} style={style}>
-        <Input
+        <Form.Input required
           name="password"
           type="password"
           {...inputProps}
@@ -126,15 +126,21 @@ export default class ReactPasswordStrength extends Component {
           onChange={this.handleChange}
           ref={ref => this.reactPasswordStrengthInput = ref}
           value={password}
+          label='Enter your password:'
         />
+        <Form.Field
+          name='score'
+          className={`${namespaceClassName}-strength-desc`}
+          onChange={this.handleChange}
+          label={strengthDesc}
+        />
+        <div className={`${namespaceClassName}-strength-bar`} />
         <input
           name="score"
           type="hidden"
           ref={this.scoreRef}
           value={score}
         />
-        <div className={`${namespaceClassName}-strength-bar`} />
-        <span name="score" className={`${namespaceClassName}-strength-desc`} onChange={this.handleChange}>{strengthDesc}</span>
       </div>
     );
   }

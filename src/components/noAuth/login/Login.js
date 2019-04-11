@@ -51,11 +51,11 @@ class Login extends Component {
         </Header>
         
         <Segment placeholder>
-          <Grid textAlign='center' columns={1} relaxed='very' verticalAlign='middle' stackable>
+          <Grid columns={1} relaxed='very' verticalAlign='middle' stackable>
             <Grid.Column>
               <Form error>
-                <Form.Input icon='user' iconPosition='left' label='Username' placeholder='Username' name='username' value={this.state.username} onChange={this.handleChange} />
-                <Form.Input icon='lock' iconPosition='left' label='Password' placeholder='Password' name='password' type='password' value={this.state.password} onChange={this.handleChange} />
+                <Form.Input icon='user' iconPosition='left' label='Username:' placeholder='Username' name='username' value={this.state.username} onChange={this.handleChange} />
+                <Form.Input icon='lock' iconPosition='left' label='Password:' placeholder='Password' name='password' type='password' value={this.state.password} onChange={this.handleChange} />
                 {this._renderError()}
                 <Button icon labelPosition='right' onClick={this.handleClick}>
                   Login

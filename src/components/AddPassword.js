@@ -55,17 +55,18 @@ class AddPassword extends Component {
     return (
       <div style={{height:'100%', maxWidth:'50%', verticalAlign:'middle', marginLeft:'25%', marginRight:'25%', marginTop:'1%'}}>
         <Header as='h2' color='teal' textAlign='center'>
-          Check your password strength
+          CHECK YOUR PASSWORD STRENGTH
         </Header>
         
         <Segment placeholder>
-          <Grid textAlign='center' columns={1} relaxed='very' verticalAlign='middle' stackable>
+          <Grid textAlign='left' columns={1} relaxed='very' verticalAlign='middle' stackable>
             <Grid.Column>
               <Form>
                 <PasswordStrength fireChange={(target) => this.handleChange({ target })}></PasswordStrength>
-                <Dropdown name='platformId' onChange={this.handleDropDown} placeholder='Selecciona una plataforma' fluid selection options={platformsOptions} />
+                <Form.Field required label='Select a platform:' />
+                <Dropdown name='platformId' onChange={this.handleDropDown} placeholder='Select a platform' fluid selection options={platformsOptions} />
                 <Button icon labelPosition='right' onClick={this.handleClick}>
-                  Registrar puntuación
+                  Save password
                   <Icon name='right arrow' />
                 </Button>
               </Form>

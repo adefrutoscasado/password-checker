@@ -72,7 +72,7 @@ class Register extends Component {
                   iconPosition='left' 
                   label='Enter your new username' 
                   placeholder='Username' 
-                  name='Enter your new username' 
+                  name='username' 
                   value={this.state.username} 
                   onChange={this.handleChange} 
                 />

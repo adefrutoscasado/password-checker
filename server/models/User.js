@@ -19,7 +19,13 @@ class User extends unique(Model) {
   }
 
   get total_score() {
-    let totalScore = 1234567890 + parseInt(this.id)
+    let platforms = this.user_platforms
+    let totalScore = 0
+    if (platforms && platforms.length) {
+      totalScore = platforms.reduce((counter, platform) => {
+        return counter + this.getPonderateScore(platform.platform_score)
+      }, 0);
+    }
     return totalScore
   }
 
@@ -47,6 +53,23 @@ class User extends unique(Model) {
         }
       },
     };
+  }
+
+  getPonderateScore (platformScore) {
+    switch(platformScore) {
+      case 1:
+        return 0.1;
+      case 2:
+        return platformScore*0.3;
+      case 3:
+        return platformScore*0.6;
+      case 4:
+        return platformScore*0.8;
+      case 5:
+        return platformScore;
+      default:
+        return 0;
+    }
   }
 
   static async getByUsername(username) {
