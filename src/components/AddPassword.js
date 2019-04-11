@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PasswordStrength from './PasswordStrength';
-import { Button, Icon, Dropdown } from 'semantic-ui-react'
+import { Button, Icon, Dropdown, Header, Segment, Grid, Form } from 'semantic-ui-react'
 import ApiClient from '../helpers/ApiClient'
 import { connect } from 'react-redux';
 
@@ -53,16 +53,25 @@ class AddPassword extends Component {
       {return {key: p.id, value: p.id, text: p.name}}
     )
     return (
-      <div>
-        <form>
+      <div style={{height:'100%', maxWidth:'50%', verticalAlign:'middle', marginLeft:'25%', marginRight:'25%', marginTop:'1%'}}>
+        <Header as='h2' color='teal' textAlign='center'>
           Check your password strength
-          <PasswordStrength fireChange={(target) => this.handleChange({ target })}></PasswordStrength>
-          <Dropdown name='platformId' onChange={this.handleDropDown} placeholder='Selecciona una plataforma' fluid selection options={platformsOptions} />
-        </form>
-        <Button icon labelPosition='right' onClick={this.handleClick}>
-          Registrar puntuacion
-          <Icon name='right arrow' />
-        </Button>
+        </Header>
+        
+        <Segment placeholder>
+          <Grid textAlign='center' columns={1} relaxed='very' verticalAlign='middle' stackable>
+            <Grid.Column>
+              <Form>
+                <PasswordStrength fireChange={(target) => this.handleChange({ target })}></PasswordStrength>
+                <Dropdown name='platformId' onChange={this.handleDropDown} placeholder='Selecciona una plataforma' fluid selection options={platformsOptions} />
+                <Button icon labelPosition='right' onClick={this.handleClick}>
+                  Registrar puntuación
+                  <Icon name='right arrow' />
+                </Button>
+              </Form>
+            </Grid.Column>
+          </Grid>
+        </Segment>
       </div>
     )
   }

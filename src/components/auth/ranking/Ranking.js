@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Table, Accordion} from 'semantic-ui-react'
+import {Table, Accordion, Header} from 'semantic-ui-react'
 import ApiClient from '../../../helpers/ApiClient'
 
 export default class Ranking extends Component {
@@ -30,7 +30,9 @@ export default class Ranking extends Component {
     let rank = 0;
     return (
       <div>
-        RANKING
+        <Header as='h2' color='teal' textAlign='center'>
+          RANKING
+        </Header>
         <div>
           <Table celled>
             <Table.Header>

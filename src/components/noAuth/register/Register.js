@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Button, Icon} from 'semantic-ui-react'
+import {Button, Icon, Form, Message, Grid, Segment} from 'semantic-ui-react'
 import {registerUser} from './actions';
 import {connect} from 'react-redux';
 import {DO_REGISTER_REQUEST} from './action-types';
@@ -46,12 +46,14 @@ class Register extends Component {
     }
   }
 
-  _renderMessage(){
+  _renderError(){
     if (this.state.message) {
       return (
-        <div>
-          {this.state.message}
-        </div>
+        <Message
+          error
+          header='Action Forbidden'
+          content={this.state.message}
+        />
       )
     } else {
       return null
@@ -60,38 +62,49 @@ class Register extends Component {
 
   render() {
     return (
-      <div>
-        <form>
-          <input
-            type="text"
-            name="username"
-            placeholder="Enter your new username"
-            value={this.state.username}
-            onChange={this.handleChange}
-            required={true}
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="New password"
-            value={this.state.password}
-            onChange={this.handleChange}
-            required={true}
-          />
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm your new password"
-            value={this.state.confirmPassword}
-            onChange={this.handleChange}
-            required={true}
-          />
-        </form>
-        <Button icon labelPosition='right' onClick={this.handleClick}>
-          Save
-          <Icon name='right arrow' />
-        </Button>
-        {this._renderMessage()}
+      <div style={{height:'100%', maxWidth:'50%', verticalAlign:'middle', marginLeft:'25%', marginRight:'25%', marginTop:'1%'}}>
+        <Segment placeholder>
+          <Grid columns={1} relaxed='very' verticalAlign='middle' stackable>
+            <Grid.Column>
+              <Form error>
+                <Form.Input required
+                  icon='user' 
+                  iconPosition='left' 
+                  label='Enter your new username' 
+                  placeholder='Username' 
+                  name='Enter your new username' 
+                  value={this.state.username} 
+                  onChange={this.handleChange} 
+                />
+                <Form.Input required
+                  icon='lock' 
+                  iconPosition='left' 
+                  label='New password' 
+                  placeholder='New password' 
+                  name='password' 
+                  type='password' 
+                  value={this.state.password} 
+                  onChange={this.handleChange} 
+                />
+                <Form.Input required
+                  icon='lock' 
+                  iconPosition='left' 
+                  label='Confirm new password' 
+                  placeholder='Confirm your new password' 
+                  name='confirmPassword' 
+                  type='password' 
+                  value={this.state.confirmPassword} 
+                  onChange={this.handleChange} 
+                />
+                {this._renderError()}
+                <Button icon labelPosition='right' onClick={this.handleClick}>
+                  Sign up
+                  <Icon name='right arrow' />
+                </Button>
+              </Form>
+            </Grid.Column>
+          </Grid>
+        </Segment>
       </div>
     )
   }

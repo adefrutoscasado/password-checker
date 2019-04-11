@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Button, Icon, Form, Message} from 'semantic-ui-react'
+import {Button, Icon, Form, Message, Grid, Segment, Header} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {login} from './actions'
 
@@ -45,37 +45,26 @@ class Login extends Component {
 
   render() {
     return (
-      <div>
-        WELCOME TO PASSWORD CHECKER
-          <Form error>
-            <Form.Field>
-              <label>Username:</label>
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                value={this.state.username}
-                onChange={this.handleChange}
-                required={true}
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>Password:</label>
-              <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              value={this.state.password}
-              onChange={this.handleChange}
-              required={true}
-              />
-            </Form.Field>
-            {this._renderError()}
-            <Button icon labelPosition='right' onClick={this.handleClick}>
-              Send
-              <Icon name='right arrow' />
-            </Button>
-        </Form>
+      <div style={{height:'100%', maxWidth:'50%', verticalAlign:'middle', marginLeft:'25%', marginRight:'25%', marginTop:'1%'}}>
+        <Header as='h2' color='teal' textAlign='center'>
+          WELCOME TO PASSWORD CHECKER
+        </Header>
+        
+        <Segment placeholder>
+          <Grid textAlign='center' columns={1} relaxed='very' verticalAlign='middle' stackable>
+            <Grid.Column>
+              <Form error>
+                <Form.Input icon='user' iconPosition='left' label='Username' placeholder='Username' name='username' value={this.state.username} onChange={this.handleChange} />
+                <Form.Input icon='lock' iconPosition='left' label='Password' placeholder='Password' name='password' type='password' value={this.state.password} onChange={this.handleChange} />
+                {this._renderError()}
+                <Button icon labelPosition='right' onClick={this.handleClick}>
+                  Login
+                  <Icon name='sign-in' />
+                </Button>
+              </Form>
+            </Grid.Column>
+          </Grid>
+        </Segment>
       </div>
     )
   }
