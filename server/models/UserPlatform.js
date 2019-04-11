@@ -1,5 +1,5 @@
 const { Model } = require('objection')
-const bcrypt = require('bcrypt');
+const { isInt } = require('./../helpers/type')
 
 const knexConnection = require('../services/knexConnection')
 Model.knex(knexConnection)
@@ -21,7 +21,7 @@ class UserPlatform extends Model {
   static get jsonSchema() {
     return {
       type: 'object',
-      //required: ['user_id', 'platform_id'],
+      required: ['platform_id'],
       properties: {
         id: { type: 'integer' },
         user_id: { type: 'integer' },

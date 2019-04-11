@@ -1,5 +1,4 @@
 const { Model } = require('objection')
-const bcrypt = require('bcrypt');
 const { isInt } = require('./../helpers/type')
 
 const knexConnection = require('./../services/knexConnection')

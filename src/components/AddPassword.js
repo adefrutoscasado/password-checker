@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PasswordStrength from './PasswordStrength';
-import {Button, Icon} from 'semantic-ui-react'
+import { Button, Icon, Dropdown } from 'semantic-ui-react'
 import ApiClient from '../helpers/ApiClient'
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 const mapStateToProps = state => ({
   userId: state.login.userId
@@ -28,9 +28,13 @@ class AddPassword extends Component {
       });
   }
 
-  handleChange = ({target}) => {
-    console.log(target)
-    this.setState({[target.name]: target.value, message:''});
+  handleChange = ({ target }) => {
+    this.setState({ [target.name]: target.value, message: '' });
+  }
+
+  // REVIEW: Why dropdown fire different event
+  handleDropDown = (e,target) => {
+    this.setState({ [target.name]: target.value, message: '' });
   }
 
   handleClick = async (opts) => {
@@ -45,19 +49,18 @@ class AddPassword extends Component {
   }
 
   render() {
+    let platformsOptions = this.state.platforms.map(p => 
+      {return {key: p.id, value: p.id, text: p.name}}
+    )
     return (
       <div>
         <form>
           Check your password strength
-          <PasswordStrength fireChange={(target) => this.handleChange({target})}></PasswordStrength>
-          <select name='platformId' onChange={this.handleChange}>
-            {this.state.platforms.map(p =>
-              <option key={p.id} value={p.id}>{p.name}</option>
-            )}
-          </select>
+          <PasswordStrength fireChange={(target) => this.handleChange({ target })}></PasswordStrength>
+          <Dropdown name='platformId' onChange={this.handleDropDown} placeholder='Selecciona una plataforma' fluid selection options={platformsOptions} />
         </form>
         <Button icon labelPosition='right' onClick={this.handleClick}>
-          Submit
+          Registrar puntuacion
           <Icon name='right arrow' />
         </Button>
       </div>
