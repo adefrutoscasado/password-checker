@@ -2,17 +2,15 @@
 const jwt = require('jsonwebtoken')
 
 let generateAccessToken = (req, payload) => {
-  return jwt.sign({ 
-    ...payload,
-    expiresIn: '30s',
-  }, req.app.get('JWT_SECRET'));
+  return jwt.sign({
+    data: payload
+  }, req.app.get('JWT_SECRET'), { expiresIn: '30 min' });
 }
 
 let generateRefreshToken = (req, payload) => {
   return jwt.sign({
-    ...payload,
-    expiresIn: '30 days',
-  }, req.app.get('REFRESH_JWT_SECRET'));
+    data: payload
+  }, req.app.get('REFRESH_JWT_SECRET'), { expiresIn: '30 days' });
 }
 
 function getBearerToken(req) {

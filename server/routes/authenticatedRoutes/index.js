@@ -1,20 +1,18 @@
-const jwt = require('express-jwt')
+const jwt = require('jsonwebtoken')
 const express = require('express')
 const router = express.Router({ mergeParams: true })
 const asyncWrap = require('./../../helpers/asyncWrap')
 const jwtService = require('./../../services/jwtService')
 const { User, Platform, Password } = require('./../../models')
 
-router.use(async (req, res, next) => {
+router.use(asyncWrap (async (req, res, next) => {
   let token = jwtService.getBearerToken(req)
-  if (token) {
-    return jwt({
-      secret: req.app.get('JWT_SECRET'),
-      requestProperty: 'auth'
-    })(req, res, next)
-  }
-  res.status(401).send(new Error('Invalid token'))
-})
+  jwt.verify(token, req.app.get('JWT_SECRET'), function(err, decoded) {
+    if (err) throw new Error(err)
+    req.auth = decoded
+  });
+  next()
+}))
 
 // localhost:3010/users?eager=user_platforms.[platform,passwords]
 router.get('/users/:userId', asyncWrap(async (req, res, next) => {
