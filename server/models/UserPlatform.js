@@ -21,7 +21,7 @@ class UserPlatform extends Model {
   static get jsonSchema() {
     return {
       type: 'object',
-      required: ['user_id', 'platform_id'],
+      //required: ['user_id', 'platform_id'],
       properties: {
         id: { type: 'integer' },
         user_id: { type: 'integer' },
