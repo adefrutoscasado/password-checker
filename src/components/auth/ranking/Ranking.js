@@ -1,29 +1,24 @@
 import React, { Component } from 'react'
 import {Table, Accordion, Header, Icon} from 'semantic-ui-react'
-import ApiClient from '../../../helpers/ApiClient'
+import {getRanking} from './actions';
+import {connect} from 'react-redux';
 
-export default class Ranking extends Component {
-  constructor() {
-    super();
-    this.state = { 
-        ranking: []
-      };
+const mapStateToProps = state => {
+  return {
+    ranking: state.ranking.ranking
   }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getRanking: () => dispatch(getRanking())
+  }
+}
+
+class NonConnectedRanking extends Component {
 
   componentDidMount() {
-    this.updateRanking();
-  }
-
-  updateRanking() {
-    ApiClient.requestGetRanking()
-      .then(response => {
-        this.setState({ 
-          ranking: response
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.props.getRanking();
   }
 
   _renderWinner(rank) {
@@ -52,7 +47,7 @@ export default class Ranking extends Component {
               </Table.Row>
             </Table.Header>
               <Table.Body>
-                {this.state.ranking.map(user =>
+                {this.props.ranking.map(user =>
                   <Table.Row>
                     <Table.Cell textAlign='center'>{rank = rank + 1} {this._renderWinner(rank)}</Table.Cell>
                     <Table.Cell>
@@ -91,3 +86,5 @@ export default class Ranking extends Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(NonConnectedRanking)

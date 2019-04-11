@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PasswordStrength from './PasswordStrength';
-import { Button, Icon, Dropdown, Header, Segment, Grid, Form } from 'semantic-ui-react'
+import { Button, Icon, Dropdown, Header, Segment, Grid, Form, Message } from 'semantic-ui-react'
 import ApiClient from '../helpers/ApiClient'
 import { connect } from 'react-redux';
 
@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
 class AddPassword extends Component {
   constructor() {
     super();
-    this.state = { platforms: [] };
+    this.state = { platforms: [], error: '' };
   }
 
   componentDidMount() {
@@ -45,7 +45,22 @@ class AddPassword extends Component {
       })
       .catch((err) => {
         console.log(err);
+        this.setState({error: err})
       })
+  }
+
+  _renderError(){
+    if (this.state.error) {
+      return (
+        <Message
+          negative
+          header='Action Forbidden'
+          content={this.state.error}
+        />
+      )
+    } else {
+      return null
+    }
   }
 
   render() {
@@ -65,9 +80,10 @@ class AddPassword extends Component {
                 <PasswordStrength fireChange={(target) => this.handleChange({ target })}></PasswordStrength>
                 <Form.Field required label='Select a platform:' />
                 <Dropdown name='platformId' onChange={this.handleDropDown} placeholder='Select a platform' fluid selection options={platformsOptions} />
+                {this._renderError()}
                 <Button icon labelPosition='right' onClick={this.handleClick}>
                   Save password
-                  <Icon name='right arrow' />
+                  <Icon name='protect' />
                 </Button>
               </Form>
             </Grid.Column>

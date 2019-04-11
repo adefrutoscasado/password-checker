@@ -2,19 +2,6 @@ import Config from '../constants/Config'
 
 export default class ApiClient {
 
-    static async requestRegisterUser(email, password, confirmPassword) {
-        const data = {
-            email,
-            password,
-            confirmPassword
-        };
-        return ApiClient.fetch(Config.api.getPath('/auth/register'), 'POST', data)
-    }
-
-    static async requestGetRanking() {
-        return ApiClient.fetch(Config.api.getPath('/ranking'), 'GET')
-    }
-
     static async requestGetPlatforms() {
         return ApiClient.fetch(Config.api.getPath('/platforms'), 'GET')
     }

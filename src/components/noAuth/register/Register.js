@@ -24,7 +24,8 @@ class Register extends Component {
     password: '',
     confirmPassword: '',
     sending: false,
-    message: ''
+    message: '',
+    success: false
   };
 
   handleChange = ({target}) => {
@@ -40,24 +41,35 @@ class Register extends Component {
     const currentSending = this.props.isFetching.includes(DO_REGISTER_REQUEST);
     if (this.state.sending !== currentSending) {
       if (this.props.results && this.props.results.message) {
-        this.setState({message: this.props.results.message})
+        this.setState({message: this.props.results.message, success: this.props.results.success})
       }
       this.setState({sending: currentSending});
     }
   }
 
-  _renderError(){
-    if (this.state.message) {
-      return (
-        <Message
-          error
-          header='Action Forbidden'
-          content={this.state.message}
-        />
-      )
+  _renderMessage(){
+    if (this.state.success) {
+      if(this.state.message) {
+        return (
+          <Message
+            positive
+            header='You can now login'
+            content={this.state.message}
+          />
+        )
+      }
     } else {
-      return null
+      if (this.state.message) {
+        return (
+          <Message
+            negative
+            header='Action Forbidden'
+            content={this.state.message}
+          />
+        )
+      }
     }
+    return null
   }
 
   render() {
@@ -66,7 +78,7 @@ class Register extends Component {
         <Segment placeholder>
           <Grid columns={1} relaxed='very' verticalAlign='middle' stackable>
             <Grid.Column>
-              <Form error>
+              <Form>
                 <Form.Input required
                   icon='user' 
                   iconPosition='left' 
@@ -96,7 +108,7 @@ class Register extends Component {
                   value={this.state.confirmPassword} 
                   onChange={this.handleChange} 
                 />
-                {this._renderError()}
+                {this._renderMessage()}
                 <Button icon labelPosition='right' onClick={this.handleClick}>
                   Sign up
                   <Icon name='right arrow' />

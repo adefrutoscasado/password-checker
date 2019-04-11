@@ -40,7 +40,16 @@ function fetchAsyncMiddleware({dispatch, getState}) {
     dispatch({type: requestType});
 
     const {url, ...options} = effect;
-    const headers = getHeaders(options);
+    let headers = getHeaders(options);
+
+    // adding Bearer auth when loggedIn
+    const loginState = getState().login;
+    if(loginState.loggedIn) {
+      let authHeader = {
+        'Authorization': `Bearer ${loginState.access_token}`
+      }
+      headers = Object.assign({}, headers, authHeader)
+    }
 
     return fetch(url, {...options, headers})
     .then(res => {

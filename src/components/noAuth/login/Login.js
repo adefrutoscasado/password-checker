@@ -33,7 +33,7 @@ class Login extends Component {
     if (this.props.loginError) {
       return (
         <Message
-          error
+          negative
           header='Action Forbidden'
           content={this.props.loginError}
         />
@@ -53,7 +53,7 @@ class Login extends Component {
         <Segment placeholder>
           <Grid columns={1} relaxed='very' verticalAlign='middle' stackable>
             <Grid.Column>
-              <Form error>
+              <Form>
                 <Form.Input icon='user' iconPosition='left' label='Username:' placeholder='Username' name='username' value={this.state.username} onChange={this.handleChange} />
                 <Form.Input icon='lock' iconPosition='left' label='Password:' placeholder='Password' name='password' type='password' value={this.state.password} onChange={this.handleChange} />
                 {this._renderError()}

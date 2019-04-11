@@ -17,7 +17,8 @@ export default (state = initialState, action) => {
         ...state,
         loggedIn: true,
         userId: action.payload.id,
-        access_token: action.payload.access_token
+        access_token: action.payload.access_token,
+        loginError:''
       }
     
     case DO_LOGIN_REQUEST_ROLLBACK:
