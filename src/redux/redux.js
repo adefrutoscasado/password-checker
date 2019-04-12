@@ -61,12 +61,47 @@ function fetchAsyncMiddleware({dispatch, getState}) {
         return Promise.resolve(getState());
       }
       getResponseBody(res).then(error => {
-        if(res.status === 401) {
-          dispatch(refreshToken(loginState.refresh_token))
+        if(res.status === 500 && error.message === 'TokenExpiredError: jwt expired') {
+          dispatch(refreshToken(loginState.refresh_token, action))
         } else {
           dispatch({type: rollbackType, payload: error});
           return Promise.reject(error);
         }
+      })
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  }
+}
+
+function refreshTokenMiddleware({dispatch, getState}) {
+  return next => action => {
+    const {types, effect} = action;
+
+    if(!action.commitAction) return next(action);
+    if(!action.effect) return next(action);
+
+    const {commitAction, rollbackAction} = action;
+
+    const [requestType, commitType] = types;
+    dispatch({type: requestType});
+
+    const {url, ...options} = effect;
+    let headers = getHeaders(options);
+
+    return fetch(url, {...options, headers})
+    .then(res => {
+      if(res.ok) {
+        getResponseBody(res).then(payload => {
+          dispatch({type: commitType, payload});
+        });
+        //dispatch(commitAction);
+        return Promise.resolve(getState());
+      }
+      getResponseBody(res).then(error => {
+        dispatch(rollbackAction);
+        return Promise.reject(error);
       })
     })
     .catch(error => {
@@ -87,7 +122,7 @@ const getHeaders = (options = {}) => {
 // https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(persistedReducer, composeEnhancers(applyMiddleware(fetchAsyncMiddleware, thunk)));
+const store = createStore(persistedReducer, composeEnhancers(applyMiddleware(refreshTokenMiddleware, fetchAsyncMiddleware, thunk)));
 
 export default () => {
   return {store, persistor: persistStore(store)};

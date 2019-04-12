@@ -24,7 +24,7 @@ export function login(username, password) {
 
 }
 
-export function refreshToken(refreshToken) {
+export function refreshToken(refreshToken, commitAction) {
 
   return {
     types: [
@@ -36,7 +36,9 @@ export function refreshToken(refreshToken) {
       url: Config.api.getPath('/auth/refresh'),
       method: 'POST',
       body: JSON.stringify({refresh_token: refreshToken})
-    }
+    },
+    commitAction,
+    rollbackAction: {type: 'LOGOUT'}
   }
 
 }
