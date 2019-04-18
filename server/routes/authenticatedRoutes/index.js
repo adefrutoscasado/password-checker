@@ -6,14 +6,14 @@ const jwtService = require('./../../services/jwtService')
 const { User, Platform, Password } = require('./../../models')
 const { InvalidTokenError } = require('./../../errors')
 
-router.use(asyncWrap (async (req, res, next) => {
-  let token = jwtService.getBearerToken(req)
-  jwt.verify(token, req.app.get('JWT_SECRET'), function(err, decoded) {
-    if (err) throw new InvalidTokenError(err.message)
-    req.auth = decoded
-  });
-  next()
-}))
+// router.use(asyncWrap (async (req, res, next) => {
+//   let token = jwtService.getBearerToken(req)
+//   jwt.verify(token, req.app.get('JWT_SECRET'), function(err, decoded) {
+//     if (err) throw new InvalidTokenError(err.message)
+//     req.auth = decoded
+//   });
+//   next()
+// }))
 
 // localhost:3010/users?eager=user_platforms.[platform,passwords]
 router.get('/users/:userId', asyncWrap(async (req, res, next) => {
@@ -22,8 +22,7 @@ router.get('/users/:userId', asyncWrap(async (req, res, next) => {
     .allowEager('user_platforms.[platform,passwords]')
     .eager(req.query.eager)
     .findById(req.params.userId)
-  // TODO: Remove hashed passwords from response
-  res.send(user)
+  res.send(user.toResponse())
 }));
 
 // localhost:3010/platforms
@@ -52,7 +51,7 @@ router.post('/users/:userId/platforms/:platformId/password', asyncWrap(async (re
     .query()
     .insertAndFetch({ user_platform_id: userPlatform.id, password, score })
 
-  res.send(passwordCreated)
+  res.send(passwordCreated.toResponse())
 }));
 
 router.get('/ranking', asyncWrap(async (req, res, next) => {
@@ -61,7 +60,7 @@ router.get('/ranking', asyncWrap(async (req, res, next) => {
     .eager('user_platforms.[platform,passwords]')
 
   users.sort((userA, userB) => userB.total_score - userA.total_score);
-  res.send(users)
+  res.send(users.map(u => u.toRankingResponse()))
 }));
 
 router.get('/validateToken', asyncWrap(async (req, res, next) => {

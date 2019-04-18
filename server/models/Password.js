@@ -37,6 +37,12 @@ class Password extends Model {
     await this.$beforeSave(queryContext)
   }
 
+  toResponse() {
+    return {
+      id: this.id,
+      score: this.score
+    }
+  }
 }
 
 module.exports = Password

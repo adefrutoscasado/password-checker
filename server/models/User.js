@@ -102,6 +102,23 @@ class User extends unique(Model) {
   getPlatform(platform_id) {
     return this.user_platforms.find(u_p => u_p.platform_id === platform_id)
   }
+
+  toResponse() {
+    return {
+      id: this.id,
+      username: this.username,
+      user_platforms: this.user_platforms ? this.user_platforms.map(u_p => u_p.toResponse()) : null
+    }
+  }
+
+  toRankingResponse() {
+    return {
+      id: this.id,
+      username: this.username,
+      total_score: this.total_score.toFixed(2),
+      user_platforms: this.user_platforms ? this.user_platforms.map(u_p => u_p.toRankingResponse()) : null
+    }
+  }
 }
 
 module.exports = User

@@ -60,6 +60,23 @@ class UserPlatform extends Model {
   getLastPlatformScore() {
     return this.passwords[this.passwords.length-1].score
   }
+
+  toResponse() {
+    return {
+      id: this.id,
+      platform: this.platform,
+      passwords: this.passwords.map(p => p.toResponse())
+    }
+  }
+
+  toRankingResponse() {
+    return {
+      id: this.id,
+      platform: this.platform,
+      platform_score: this.platform_score,
+      passwords: this.passwords.map(p => p.toResponse())
+    }
+  }
 }
 
 module.exports = UserPlatform

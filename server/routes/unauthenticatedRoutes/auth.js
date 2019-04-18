@@ -8,6 +8,7 @@ const { User } = require('./../../models')
 
 router.post('/register', asyncWrap( async (req, res, next) => {
   let data = req.body
+  console.log('hola')
   if (data.password !== data.confirmPassword) throw new Error('Confirm password does not match')
   let userExists = await User.getByUsername(data.username)
   if (userExists) throw new Error('User already exists')
@@ -15,10 +16,7 @@ router.post('/register', asyncWrap( async (req, res, next) => {
   res.status(201).json(
     {
       message: 'User created',
-      user: {
-        id: user.id,
-        username: user.username
-      }
+      user: user.toResponse()
     }
   );
 }));
