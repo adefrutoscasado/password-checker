@@ -61,7 +61,7 @@ function fetchAsyncMiddleware({dispatch, getState}) {
         return Promise.resolve(getState());
       }
       getResponseBody(res).then(error => {
-        if(res.status === 500 && error.message === 'TokenExpiredError: jwt expired') {
+        if(res.status === 401) {
           dispatch(refreshToken(loginState.refresh_token, action))
         } else {
           dispatch({type: rollbackType, payload: error});

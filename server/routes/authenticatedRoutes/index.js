@@ -4,11 +4,12 @@ const router = express.Router({ mergeParams: true })
 const asyncWrap = require('./../../helpers/asyncWrap')
 const jwtService = require('./../../services/jwtService')
 const { User, Platform, Password } = require('./../../models')
+const { InvalidTokenError } = require('./../../errors')
 
 router.use(asyncWrap (async (req, res, next) => {
   let token = jwtService.getBearerToken(req)
   jwt.verify(token, req.app.get('JWT_SECRET'), function(err, decoded) {
-    if (err) throw new Error(err)
+    if (err) throw new InvalidTokenError(err.message)
     req.auth = decoded
   });
   next()
