@@ -14,18 +14,19 @@ export default class HeaderNoAuth extends Component {
 
     return (
       <Menu icon='labeled'>
-        <Menu.Item name='login' active={activeItem === 'login'} onClick={this.handleItemClick}>
+        <Menu.Item name='login' as={Link} to='/' active={activeItem === 'login'} onClick={this.handleItemClick}>
           <Icon name='sign-in' />
-          <Link to='/'>Login</Link>
+          Login
         </Menu.Item>
 
         <Menu.Item
           name='sign up'
+          as={Link} to='/register'
           active={activeItem === 'sign up'}
           onClick={this.handleItemClick}
         >
           <Icon name='signup' />
-          <Link to='/register'>Sign up</Link>
+          Sign up
         </Menu.Item>
       </Menu>
     )
