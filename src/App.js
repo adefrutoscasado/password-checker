@@ -15,16 +15,17 @@ const mapStateToProps = state => ({
 
 class App extends Component {
   render() {
+    let style = {height:'100%', maxWidth:'80%', verticalAlign:'middle', marginLeft:'10%', marginRight:'10%', marginTop:'1%'}
     if (this.props.loggedIn) {
       return (
-        <div style={{height:'100%', maxWidth:'80%', verticalAlign:'middle', marginLeft:'10%', marginRight:'10%', marginTop:'1%'}} >
+        <div style={style} >
           <HeaderAuth />
           <HomeAuth />
         </div>
       );
     } else {
       return (
-        <div style={{height:'100%', maxWidth:'80%', verticalAlign:'middle', marginLeft:'10%', marginRight:'10%', marginTop:'1%'}} >
+        <div style={style} >
           <HeaderNoAuth />
           <HomeNoAuth />
         </div>
