@@ -25,6 +25,7 @@ class NonConnectedRanking extends Component {
     if (rank === 1) {
       return (
         <Icon name='hand spock outline' />
+        // <span role="img" aria-label="unicorn">🦄</span>
       )
     }
     return null

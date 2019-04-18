@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PasswordStrength from './PasswordStrength';
 import { Button, Icon, Dropdown, Header, Segment, Grid, Form, Message } from 'semantic-ui-react'
-import ApiClient from '../helpers/ApiClient'
+import ApiClient from '../../../helpers/ApiClient'
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => ({
