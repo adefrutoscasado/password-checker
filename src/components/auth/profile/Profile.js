@@ -43,24 +43,24 @@ export default class Profile extends Component {
     this.setState({graphBody})
   }
 
-  getClone(obj) {
-    return JSON.parse(JSON.stringify(obj));
+  getClone(reference) {
+    return JSON.parse(JSON.stringify(reference));
   }
 
-  removePasswordFromGroup(groupId, id) {
+  removePasswordFromPlatform(userPlatformId, id) {
     let graphBody = this.getClone(this.state.graphBody); // clone this.state.graphBody. https://reactjs.org/docs/react-component.html#state
 
-    const userPlatform = graphBody.find(g => g.id === groupId);
+    const userPlatform = graphBody.find(g => g.id === userPlatformId);
     if (userPlatform) {
       userPlatform.passwords = userPlatform.passwords.filter(item => item.id !== id);
       this.setState({graphBody});
     }
   }
 
-  addPasswordFromGroup(groupId, id) {
+  addPasswordFromPlatform(userPlatformId, id) {
     let graphBody = this.getClone(this.state.graphBody); // clone this.state.graphBody. https://reactjs.org/docs/react-component.html#state
     
-    const userPlatform = graphBody.find(g => g.id === groupId);
+    const userPlatform = graphBody.find(g => g.id === userPlatformId);
     if (userPlatform) {
       userPlatform.passwords.push({id});
       this.setState({graphBody});
