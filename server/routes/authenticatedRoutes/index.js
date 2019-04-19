@@ -6,14 +6,14 @@ const jwtService = require('./../../services/jwtService')
 const { User, Platform, Password } = require('./../../models')
 const { InvalidTokenError } = require('./../../errors')
 
-// router.use(asyncWrap (async (req, res, next) => {
-//   let token = jwtService.getBearerToken(req)
-//   jwt.verify(token, req.app.get('JWT_SECRET'), function(err, decoded) {
-//     if (err) throw new InvalidTokenError(err.message)
-//     req.auth = decoded
-//   });
-//   next()
-// }))
+router.use(asyncWrap (async (req, res, next) => {
+  let token = jwtService.getBearerToken(req)
+  jwt.verify(token, req.app.get('JWT_SECRET'), function(err, decoded) {
+    if (err) throw new InvalidTokenError(err.message)
+    req.auth = decoded
+  });
+  next()
+}))
 
 // localhost:3010/users?eager=user_platforms.[platform,passwords]
 router.get('/users/:userId', asyncWrap(async (req, res, next) => {
@@ -52,6 +52,20 @@ router.post('/users/:userId/platforms/:platformId/password', asyncWrap(async (re
     .insertAndFetch({ user_platform_id: userPlatform.id, password, score })
 
   res.send(passwordCreated.toResponse())
+}));
+
+// TODO: Review why patch receives a empty req.body
+router.put('/users/:userId/upsert', asyncWrap(async (req, res, next) => {
+  let { body } = req
+  let userId = parseInt(req.params.userId)
+  
+  let data = {
+    id: userId,
+    ...body
+  }
+  let userUpdated = await User.upsertGraphAndFetch(data)
+
+  res.send(userUpdated.toResponse())
 }));
 
 router.get('/ranking', asyncWrap(async (req, res, next) => {

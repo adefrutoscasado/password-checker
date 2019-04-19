@@ -55,7 +55,7 @@ export default class StrengthVisualizator extends Component {
 
   render() {
     let styleNone = { display: 'none' }
-    let style = { display: 'flex', 'flex-direction': 'row', 'justify-content': 'center'}
+    let style = { display: 'flex', flexDirection: 'row', justifyContent: 'center'}
     return (
       <div style={style} ref="canvasWrapper" width={this.state.width} height={this.state.height}>
         <canvas ref="canvas" width={this.state.width} height={this.state.height} />

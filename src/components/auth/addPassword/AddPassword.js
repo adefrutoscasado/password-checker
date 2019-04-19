@@ -69,11 +69,6 @@ class AddPassword extends Component {
     let platformsOptions = this.state.platforms.map(p => 
       ({key: p.id, value: p.id, text: p.name})
     )
-    let strengthVisualizatorStyle = {
-        margin: "auto",
-        border: "3px solid green",
-        padding: "10px",
-    }
     return (
       <div style={{height:'100%', maxWidth:'50%', alignContent:'center', verticalAlign:'middle', marginLeft:'25%', marginRight:'25%', marginTop:'1%'}}>
         <Header as='h2' color='teal' textAlign='center'>
@@ -89,14 +84,14 @@ class AddPassword extends Component {
                 <Dropdown name='platformId' onChange={this.handleDropDown} placeholder='Select a platform' fluid selection options={platformsOptions} />
                 {this._renderError()}
                 <Button icon labelPosition='right' onClick={this.handleClick}>
-                  Save password
+                  Submit score
                   <Icon name='protect' />
                 </Button>
               </Form>
             </Grid.Column>
           </Grid>
         </Segment>
-        <StrengthVisualizator style={strengthVisualizatorStyle} strength={parseInt(this.state.score) || 0} imageUrl={passwordStrengthImage}></StrengthVisualizator>
+        <StrengthVisualizator strength={parseInt(this.state.score) || 0} imageUrl={passwordStrengthImage}></StrengthVisualizator>
       </div>
     )
   }

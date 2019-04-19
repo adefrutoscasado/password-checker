@@ -37,6 +37,17 @@ export default class HeaderNoAuth extends Component {
           Add password
         </Menu.Item>
 
+
+        <Menu.Item
+          name='profile'
+          as={Link} to='profile'
+          active={activeItem === 'profile'}
+          onClick={this.handleItemClick}
+        >
+          <Icon name='user' />
+          Profile
+        </Menu.Item>
+
         <Menu.Item
           name='logout'
           as={Link} to='sign-out'

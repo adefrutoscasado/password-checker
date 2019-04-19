@@ -1,4 +1,4 @@
-const { Model } = require('objection')
+const { Model, transaction } = require('objection')
 const bcrypt = require('bcrypt');
 
 const knexConnection = require('./../services/knexConnection')
@@ -76,6 +76,17 @@ class User extends unique(Model) {
     return await this.query().where('username', username).first()
   }
 
+  static async upsertGraphAndFetch(data) {
+    let updatedData
+    try {
+      updatedData = await transaction(this.knex(), async (trx) => {
+        return await this.query(trx).allowUpsert('user_platforms.[passwords]').upsertGraphAndFetch(data)
+      })
+    } catch (err) {
+      throw new Error(err)
+    }
+    return updatedData
+  }
 
   async $afterGet(queryContext) {
     if (this.password) this.password = this.password.replace(/^\$2y(.+)$/i, '\$2b$1')
