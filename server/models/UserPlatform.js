@@ -58,6 +58,7 @@ class UserPlatform extends Model {
   }
 
   getLastPlatformScore() {
+    if (!this.passwords.length) return 0
     return this.passwords[this.passwords.length-1].score
   }
 
