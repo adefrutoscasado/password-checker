@@ -1,40 +1,42 @@
 import React, { Component } from 'react'
 import {Accordion, Header, Checkbox, Button, Icon} from 'semantic-ui-react'
-import ApiClient from '../../../helpers/ApiClient'
+import { connect } from 'react-redux';
+import { getUser, upsertUser } from './actions'
 
-export default class Profile extends Component {
+const mapStateToProps = state => ({
+  userId: state.login.userId,
+  user: state.profile.user,
+})
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getUser: (userId) => dispatch(getUser(userId)),
+    upsertUser: (userId, data) => dispatch(upsertUser(userId, data))
+  }
+}
+
+class Profile extends Component {
   constructor() {
     super();
     this.state = { user: null, graphBody: null, error: '' };
   }
 
   componentDidMount() {
-    this.updateUser();
+    this.props.getUser(this.props.userId)
+  }
+
+  componentWillReceiveProps(prevProps) {
+    if (this.props.user.user_platforms)
+      this.updateGraphBody()
   }
 
   handleClick = () => {
     // this.setState({sending: true})
-    ApiClient.requestUpsertUser(4, this.state.graphBody)
-      .then(() => {
-        window.alert('Updated successfully!')
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  updateUser() {
-    ApiClient.requestGetUser(4)
-      .then((user) => {
-        this.setState({ user }, () => this.updateGraphBody());
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    this.props.upsertUser(this.props.userId, this.state.graphBody)
   }
 
   updateGraphBody() {
-    const graphBody = this.state.user.user_platforms.map(u_p => 
+    const graphBody = this.props.user.user_platforms.map(u_p => 
       ({
         id: u_p.id,
         passwords: u_p.passwords.map(p => ({id: p.id}))
@@ -69,9 +71,9 @@ export default class Profile extends Component {
   
   handleChange = (e, {data}) => {
     if (data.checked)
-      this.addPasswordFromGroup(data.userplatform, data.value)
+      this.addPasswordFromPlatform(data.userplatform, data.value)
     else
-      this.removePasswordFromGroup(data.userplatform, data.value)
+      this.removePasswordFromPlatform(data.userplatform, data.value)
   }
 
 
@@ -97,15 +99,17 @@ export default class Profile extends Component {
     }
 
     const renderProfile = () => {
-      return (<Accordion defaultActiveIndex={0} panels={renderPlatforms(this.state.user.user_platforms)} styled />)
+      return (<Accordion defaultActiveIndex={0} panels={renderPlatforms(this.props.user.user_platforms)} styled />)
     }
+
+    console.log(this.props)
 
     return (
       <div>
         <Header as='h2' color='teal' textAlign='center'>
           Profile management
         </Header>
-        {this.state.user ? renderProfile() : renderProgress()}
+        {this.props.user.user_platforms ? renderProfile() : renderProgress()}
         <Button icon labelPosition='right' onClick={this.handleClick}>
           Save changes
           <Icon name='save' />
@@ -114,3 +118,5 @@ export default class Profile extends Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile)

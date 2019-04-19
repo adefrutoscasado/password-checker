@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PasswordStrength from './passwordStrength/PasswordStrength';
 import StrengthVisualizator from './strengthVisualizator/StrengthVisualizator'
 import { Button, Icon, Dropdown, Header, Segment, Grid, Form, Message } from 'semantic-ui-react'
-import ApiClient from '../../../helpers/ApiClient'
 import { connect } from 'react-redux';
 import { getPlatforms, postPassword } from './actions'
 import passwordStrengthImage from './../../../assets/password-strength-img.png'

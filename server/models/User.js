@@ -93,7 +93,7 @@ class User extends unique(Model) {
   }
 
   async $beforeSave(queryContext, old) {
-    this.password = bcrypt.hashSync(this.password, 14).replace(/^\$2b(.+)$/i, '\$2y$1')
+    if (this.password) this.password = bcrypt.hashSync(this.password, 14).replace(/^\$2b(.+)$/i, '\$2y$1')
   }
 
   async $beforeInsert(queryContext) {

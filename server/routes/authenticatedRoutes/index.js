@@ -58,7 +58,6 @@ router.post('/users/:userId/platforms/:platformId/password', asyncWrap(async (re
 router.put('/users/:userId/upsert', asyncWrap(async (req, res, next) => {
   let { body } = req
   let userId = parseInt(req.params.userId)
-  
   let data = {
     id: userId,
     ...body
