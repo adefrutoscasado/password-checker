@@ -4,17 +4,19 @@ import StrengthVisualizator from './strengthVisualizator/StrengthVisualizator'
 import { Button, Icon, Dropdown, Header, Segment, Grid, Form, Message } from 'semantic-ui-react'
 import ApiClient from '../../../helpers/ApiClient'
 import { connect } from 'react-redux';
-import { getPlatforms } from './actions'
+import { getPlatforms, postPassword } from './actions'
 import passwordStrengthImage from './../../../assets/password-strength-img.png'
 
 
 const mapStateToProps = state => ({
-  platforms: state.platforms.platforms
+  platforms: state.platforms.platforms,
+  userId: state.login.userId
 })
 
 const mapDispatchToProps = dispatch => {
   return {
-    getPlatforms: () => dispatch(getPlatforms())
+    getPlatforms: () => dispatch(getPlatforms()),
+    postPassword: (userId, platformId, password, score) => dispatch(postPassword(userId, platformId, password, score))
   }
 }
 
@@ -37,15 +39,9 @@ class AddPassword extends Component {
     this.setState({ [target.name]: target.value, message: '' });
   }
 
-  handleClick = async (opts) => {
-    ApiClient.requestSubmitPassword(this.props.userId, this.state.platformId, this.state.password, this.state.score)
-      .then(() => {
-        window.alert('Score registered!');
-      })
-      .catch((err) => {
-        console.log(err);
-        this.setState({ error: err })
-      })
+  handleClick = async () => {
+    // this.setState({sending: true})
+    this.props.postPassword(this.props.userId, this.state.platformId, this.state.password, this.state.score)
   }
 
   _renderError() {
