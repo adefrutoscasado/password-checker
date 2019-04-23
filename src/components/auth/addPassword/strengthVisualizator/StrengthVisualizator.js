@@ -12,7 +12,7 @@ export default class StrengthVisualizator extends Component {
     const img = this.refs.image
     img.onload = () => {
       this.setState({ width: img.width, height: img.height })
-      ctx.drawImage(img, 0, 0)
+      this.updateCanvas();
     }
   }
 
@@ -34,7 +34,9 @@ export default class StrengthVisualizator extends Component {
     ctx.msImageSmoothingEnabled = false;
     ctx.imageSmoothingEnabled = false;
 
-    let percent = (0.05 * (5 - this.props.strength)) + 0.05
+    let percent = (0.05 * this.props.strength) + 0.05
+    console.log(this.props.strength);
+    console.log(percent);
 
     // Calculate the scaled dimensions.
     var scaledWidth = width * percent;
@@ -42,14 +44,14 @@ export default class StrengthVisualizator extends Component {
 
     ctx.clearRect(0, 0, width, height);
 
-    if (this.props.strength > 0) {
+    if (this.props.strength === 4) {
+      ctx.drawImage(img, 0, 0, width, height);
+    } else {
       // Render image smaller.
       ctx.drawImage(img, 0, 0, scaledWidth, scaledHeight);
 
       // Stretch the smaller image onto larger context.
       ctx.drawImage(canvas, 0, 0, scaledWidth, scaledHeight, 0, 0, width, height);
-    } else {
-      ctx.drawImage(img, 0, 0, width, height);
     }
   }
 
