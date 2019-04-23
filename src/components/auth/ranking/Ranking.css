@@ -1,0 +1,4 @@
+main > div > canvas {
+  position: fixed;
+  pointer-events: none;
+}
