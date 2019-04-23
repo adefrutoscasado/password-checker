@@ -6,13 +6,17 @@ export const initialState = {
   loginError: '',
   userId: null,
   access_token: null,
-  refresh_token: null
+  refresh_token: null,
+  username: ''
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case DO_LOGIN_REQUEST:
-      return state;
+      return {
+        ...state,
+        username: (JSON.parse(action.data)).username
+      }
 
     case DO_LOGIN_REQUEST_COMMIT:
       return {

@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import {Table, Accordion, Header, Icon} from 'semantic-ui-react'
 import {getRanking} from './actions';
 import {connect} from 'react-redux';
+import Confetti from 'react-confetti-canvas';
 
 const mapStateToProps = state => {
   return {
-    ranking: state.ranking.ranking
+    ranking: state.ranking.ranking,
+    username: state.login.username
   }
 }
 
@@ -31,10 +33,22 @@ class NonConnectedRanking extends Component {
     return null
   }
 
+  _renderConfetti() {
+    let style= {position: "fixed"}
+    if (this.props.ranking[0] && this.props.ranking[0].username && (this.props.username === this.props.ranking[0].username)) {
+      return (
+        <Confetti style={style} />
+      )
+    } else {
+      return null
+    }
+  }
+
   render() {
     let rank = 0;
     return (
       <div>
+        {this._renderConfetti()}
         <Header as='h2' color='teal' textAlign='center'>
           RANKING
         </Header>

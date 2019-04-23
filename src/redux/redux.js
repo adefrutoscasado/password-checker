@@ -38,7 +38,7 @@ function fetchAsyncMiddleware({dispatch, getState}) {
     if(!action.effect) return next(action);
 
     const [requestType, commitType, rollbackType] = types;
-    dispatch({type: requestType});
+    dispatch({type: requestType, data: effect.body});
 
     const {url, ...options} = effect;
     let headers = getHeaders(options);
