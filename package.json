@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/jest": "^24.0.12",
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.8.16",
+    "@types/react-dom": "^16.8.4",
     "bcrypt": "^3.0.5",
     "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.3",
@@ -28,6 +32,7 @@
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.86.0",
     "sqlite3": "^4.0.6",
+    "typescript": "^3.4.5",
     "zxcvbn": "^4.4.2"
   },
   "scripts": {
