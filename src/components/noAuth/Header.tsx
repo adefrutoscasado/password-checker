@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
+// @ts-ignore
 import { Link } from 'react-router-dom'
 import {Menu, Icon} from 'semantic-ui-react'
 
-export default class HeaderNoAuth extends Component {
-  state = {
+interface State {
+  activeItem: string;
+}
+
+export default class HeaderNoAuth extends Component <{}, State> {
+  state: State = {
     activeItem: 'login'
   }
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleItemClick = (e: any, { name }: {[s: string]: any}) => this.setState({ activeItem: name })
 
   render() {
     const { activeItem } = this.state

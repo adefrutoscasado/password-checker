@@ -1,28 +1,44 @@
-import React, { Component } from 'react'
+import React, { Component, ChangeEvent } from 'react'
 import {Button, Icon, Form, Message, Grid, Segment, Header} from 'semantic-ui-react'
+// @ts-ignore
 import {connect} from 'react-redux'
 import {login} from './actions'
+import {SessionState} from './types';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: {login: SessionState}) => ({
   loggedIn: state.login.loggedIn,
   loginError: state.login.loginError
 })
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
-    login: (username, password) => dispatch(login(username, password))
+    login: (username: string, password: string) => dispatch(login(username, password))
   }
 }
 
-class Login extends Component {
+interface Props {
+  loggedIn: boolean;
+  loginError: string;
 
-  state = {
+  login(username: string, password: string): void;
+}
+
+interface State {
+  username: string;
+  password: string;
+}
+
+class Login extends Component <Props, State> {
+
+  state: State = {
     username: '',
     password: ''
   };
 
-  handleChange = ({target}) => {
-    this.setState({[target.name]: target.value});
+  handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    let change: any = {};
+    change[e.target.name] = e.target.value
+    this.setState(change);
   }
 
   handleClick = () => {

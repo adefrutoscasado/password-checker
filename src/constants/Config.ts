@@ -1,10 +1,10 @@
-function getHost() {
+function getHost(): string {
   return 'http://localhost:3010'
 }
 
-const HOST = getHost();
+const HOST: string = getHost();
 
-function getPath (path) {
+function getPath (path: string): string {
   return HOST + path;
 }
 

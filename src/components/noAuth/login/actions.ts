@@ -1,8 +1,11 @@
 import Config from '../../../constants/Config';
+// @ts-ignore
 import {DO_LOGIN_REQUEST, DO_LOGIN_REQUEST_COMMIT, DO_LOGIN_REQUEST_ROLLBACK} from './action-types';
+// @ts-ignore
 import {REFRESH_TOKEN_REQUEST, REFRESH_TOKEN_REQUEST_COMMIT, REFRESH_TOKEN_REQUEST_ROLLBACK} from './action-types';
+import {AnyAction} from 'redux';
 
-export function login(username, password) {
+export function login(username: string, password: string) {
 
   const data = {
     username,
@@ -24,7 +27,7 @@ export function login(username, password) {
 
 }
 
-export function refreshToken(refreshToken, commitAction) {
+export function refreshToken(refreshToken: string, commitAction: AnyAction) {
 
   return {
     types: [

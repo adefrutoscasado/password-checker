@@ -1,11 +1,13 @@
 import {COMMIT, getActionRoot, REQUEST, ROLLBACK} from './action-types';
+import {FetchingState} from './types';
+import {AnyAction} from 'redux';
 
-export const initialState = {
+export const initialState: FetchingState = {
     isFetching: [],
     results: {},
 };
 
-export default function (state = initialState, action) {
+export default function (state = initialState, action: AnyAction) {
     // Updating fetching in the state
     const actionName = action.type;
     const actionRoot = getActionRoot(actionName);

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+// @ts-ignore
 import { Switch, Route } from 'react-router-dom'
 
 import Login from './login/Login';

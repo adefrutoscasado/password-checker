@@ -1,7 +1,7 @@
 import Config from '../../../constants/Config';
 import {DO_REGISTER_REQUEST, DO_REGISTER_REQUEST_COMMIT, DO_REGISTER_REQUEST_ROLLBACK} from './action-types';
 
-export function registerUser(username, password, confirmPassword) {
+export function registerUser(username: string, password: string, confirmPassword: string) {
 
   const data = {
     username,

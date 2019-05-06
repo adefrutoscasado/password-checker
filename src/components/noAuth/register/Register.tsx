@@ -1,25 +1,45 @@
-import React, { Component } from 'react'
+import React, { Component, ChangeEvent } from 'react'
 import {Button, Icon, Form, Message, Grid, Segment} from 'semantic-ui-react'
 import {registerUser} from './actions';
+// @ts-ignore
 import {connect} from 'react-redux';
 import {DO_REGISTER_REQUEST} from './action-types';
+import { FetchingState } from '../../redux-is-fetching/types';
 
-const mapStateToProps = state => {
+const mapStateToProps = (state: {isFetching: FetchingState}) => {
   return {
     isFetching: state.isFetching.isFetching,
     results: state.isFetching.results[DO_REGISTER_REQUEST]
   }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
-    registerUser: (username, password, confirmPassword) => dispatch(registerUser(username, password, confirmPassword))
+    registerUser: (username: string, password: string, confirmPassword: string) => dispatch(registerUser(username, password, confirmPassword))
   }
 }
 
-class Register extends Component {
+interface Props {
+  isFetching: string[];
+  results?: {
+      success: boolean;
+      message?: string;
+  }
+  registerUser(username: string, password: string, confirmPassword: string): void;
+}
 
-  state = {
+interface State {
+  username: string;
+  password: string;
+  confirmPassword: string;
+  sending: boolean;
+  message: string;
+  success: boolean;
+}
+
+class Register extends Component <Props, State> {
+
+  state: State = {
     username: '',
     password: '',
     confirmPassword: '',
@@ -28,8 +48,10 @@ class Register extends Component {
     success: false
   };
 
-  handleChange = ({target}) => {
-    this.setState({[target.name]: target.value, message:''});
+  handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    let change: any = {};
+    change[e.target.name] = e.target.value
+    this.setState(change);
   }
 
   handleClick = async () => {
@@ -111,7 +133,7 @@ class Register extends Component {
                 {this._renderMessage()}
                 <Button icon labelPosition='right' onClick={this.handleClick} loading={this.state.sending}>
                   Sign up
-                  <Icon name='right arrow' />
+                  <Icon name='signup' />
                 </Button>
               </Form>
             </Grid.Column>

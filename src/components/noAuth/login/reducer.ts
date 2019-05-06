@@ -1,7 +1,9 @@
 import {DO_LOGIN_REQUEST, DO_LOGIN_REQUEST_COMMIT, DO_LOGIN_REQUEST_ROLLBACK} from './action-types';
 import {REFRESH_TOKEN_REQUEST, REFRESH_TOKEN_REQUEST_COMMIT, REFRESH_TOKEN_REQUEST_ROLLBACK} from './action-types';
+import {AnyAction} from 'redux';
+import {SessionState} from './types';
 
-export const initialState = {
+export const initialState: SessionState = {
   loggedIn: false,
   loginError: '',
   userId: null,
@@ -10,7 +12,7 @@ export const initialState = {
   username: ''
 };
 
-export default (state = initialState, action) => {
+export default (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case DO_LOGIN_REQUEST:
       return {

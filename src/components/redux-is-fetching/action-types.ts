@@ -8,19 +8,19 @@ export const COMMIT = '_COMMIT';
 export const ROLLBACK = '_ROLLBACK';
 export const REQUEST = '_REQUEST';
 
-export function getRequestName(name) {
+export function getRequestName(name: string) {
     return name + REQUEST;
 }
 
-export function getCommitName(name) {
+export function getCommitName(name: string) {
     return name + REQUEST + COMMIT;
 }
 
-export function getRollbackName(name) {
+export function getRollbackName(name: string) {
     return name + REQUEST + ROLLBACK;
 }
 
-export function getActionsNames(name) {
+export function getActionsNames(name: string) {
     return [
         getRequestName(name),
         getCommitName(name),
@@ -28,4 +28,4 @@ export function getActionsNames(name) {
     ];
 }
 
-export const getActionRoot = (actionType) => actionType.replace(COMMIT, '').replace(ROLLBACK, '');
+export const getActionRoot = (actionType: string) => actionType.replace(COMMIT, '').replace(ROLLBACK, '');
