@@ -16,7 +16,7 @@ router.use(asyncWrap (async (req, res, next) => {
 }))
 
 // localhost:3010/users?eager=user_platforms.[platform,passwords]
-router.get('/users/:userId', asyncWrap(async (req, res, next) => {
+router.get('/users/:userId(\\d+)', asyncWrap(async (req, res, next) => {
   let user = await User
     .query()
     .allowEager('user_platforms.[platform,passwords]')
@@ -31,7 +31,7 @@ router.get('/platforms', asyncWrap(async (req, res, next) => {
   res.send(platforms)
 }));
 
-router.post('/users/:userId/platforms/:platformId/password', asyncWrap(async (req, res, next) => {
+router.post('/users/:userId(\\d+)/platforms/:platformId(\\d+)/password', asyncWrap(async (req, res, next) => {
   let { password, score } = req.body
   let platformId = parseInt(req.params.platformId)
   let userId = parseInt(req.params.userId)
@@ -55,7 +55,7 @@ router.post('/users/:userId/platforms/:platformId/password', asyncWrap(async (re
 }));
 
 // TODO: Review why patch receives a empty req.body
-router.put('/users/:userId/upsert', asyncWrap(async (req, res, next) => {
+router.put('/users/:userId(\\d+)/upsert', asyncWrap(async (req, res, next) => {
   let { body } = req
   let userId = parseInt(req.params.userId)
   let data = {

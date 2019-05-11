@@ -54,10 +54,11 @@ router.post('/refresh', asyncWrap(async (req, res) => {
   })
 
   const payload = {
-    id: tokenData.id
+    id: tokenData.data.id
   }
   let accessToken = await jwtService.generateAccessToken(req, payload)
   let newRefreshToken = await jwtService.generateRefreshToken(req, payload)
+
   res.json(
     {
       ...payload,
