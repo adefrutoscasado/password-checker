@@ -48,11 +48,11 @@ class NonConnectedRanking extends Component {
     let rank = 0;
     return (
       <div>
-        {this._renderConfetti()}
         <Header as='h2' color='teal' textAlign='center'>
           RANKING
         </Header>
         <div>
+          {this._renderConfetti()}
           <Table celled>
             <Table.Header>
               <Table.Row>

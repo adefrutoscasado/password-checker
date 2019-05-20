@@ -1,4 +1,4 @@
-main > div > canvas {
+main > div > div > canvas {
   position: fixed;
   pointer-events: none;
 }
