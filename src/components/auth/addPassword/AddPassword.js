@@ -61,7 +61,7 @@ class AddPassword extends Component {
         return (
           <Message
             positive
-            header='Password registered succesfully'
+            header='Success'
             content={this.state.message}
           />
         )

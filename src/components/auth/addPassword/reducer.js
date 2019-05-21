@@ -32,7 +32,7 @@ export default (state = initialState, action) => {
     
     case POST_PASSWORD_REQUEST_ROLLBACK:
       return {
-        ...initialState,
+        ...state,
         postPasswordError: action.payload.message
       }
       
