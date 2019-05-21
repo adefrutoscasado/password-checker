@@ -7,6 +7,7 @@ exports.up = function(knex, Promise) {
         .string('username', 100)
         .unique()
       table.string('password', 100)
+      table.timestamps();
     })
   ])
 }

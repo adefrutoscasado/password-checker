@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import {Accordion, Header, Checkbox, Button, Icon} from 'semantic-ui-react'
+import moment from 'moment'
+import {Accordion, Header, Checkbox, Button, Icon, Segment} from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import { getUser, upsertUser } from './actions'
 
@@ -80,10 +81,15 @@ class Profile extends Component {
   render() {
     let passwordContainerStyle = { display: 'flex', flexDirection: 'column', justifyContent: 'left', padding:'10px'}
 
+    let humanizeTime = (time) => {
+      console.log(moment.zone())
+      return moment.utc(time).local().format('MMMM Do YYYY, h:mm:ss a').toString(); 
+    }
+
     let renderPasswords = (u_pId, passwords) => {
       return passwords.map((p) =>
         <div style={passwordContainerStyle}>
-          <Checkbox key={p.id} userplatform={u_pId} label={p.score} value={p.id} defaultChecked onChange={(e, data) => this.handleChange(e, {data})} />
+          <Checkbox key={p.id} userplatform={u_pId} label={p.score + ' Pts, (' + humanizeTime(p.created_at) + ')'} value={p.id} defaultChecked onChange={(e, data) => this.handleChange(e, {data})} />
         </div>
       )
     }
@@ -98,19 +104,22 @@ class Profile extends Component {
       return <h3>Loading...</h3>;
     }
 
+    let accordionStyle = { width: '100%'}
     const renderProfile = () => {
-      return (<Accordion defaultActiveIndex={0} panels={renderPlatforms(this.props.user.user_platforms)} styled />)
+      return (<Accordion style={accordionStyle} defaultActiveIndex={0} panels={renderPlatforms(this.props.user.user_platforms)} styled />)
     }
 
     console.log(this.props)
 
     return (
-      <div>
+      <div style={{ height: '100%', maxWidth: '50%', alignContent: 'center', verticalAlign: 'middle', marginLeft: '25%', marginRight: '25%', marginTop: '1%' }}>
         <Header as='h2' color='teal' textAlign='center'>
           Profile management
         </Header>
+        <Segment placeholder>
         {this.props.user.user_platforms ? renderProfile() : renderProgress()}
-        <Button icon labelPosition='right' onClick={this.handleClick}>
+        </Segment>
+        <Button icon onClick={this.handleClick}>
           Save changes
           <Icon name='save' />
         </Button>

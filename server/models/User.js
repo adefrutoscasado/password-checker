@@ -29,6 +29,8 @@ class User extends unique(Model) {
     return totalScore
   }
 
+
+
   static get jsonSchema() {
     return {
       type: 'object',
@@ -36,7 +38,9 @@ class User extends unique(Model) {
       properties: {
         id: { type: 'integer' },
         username: { type: 'string' },
-        password: { type: 'string', minLength: 8 }
+        password: { type: 'string', minLength: 8 },
+        created_at: { type: 'string', format: 'date-time' },
+        updated_at: { type: 'string', format: 'date-time' },
       }
     }
   }
@@ -99,11 +103,15 @@ class User extends unique(Model) {
   async $beforeInsert(queryContext) {
     await super.$beforeInsert(queryContext)
     await this.$beforeSave(queryContext)
+    this.created_at = new Date().toISOString()
+    delete this.updated_at
   }
 
   async $beforeUpdate(opt, queryContext) {
     await super.$beforeUpdate(opt, queryContext)
     await this.$beforeSave(queryContext, opt.old)
+    this.updated_at = new Date().toISOString()
+    delete this.created_at
   }
 
   checkCredentials(password) {
@@ -126,6 +134,8 @@ class User extends unique(Model) {
     return {
       id: this.id,
       username: this.username,
+      created_at: this.created_at,
+      updated_at: this.updated_at,
       total_score: this.total_score.toFixed(2),
       user_platforms: this.user_platforms ? this.user_platforms.map(u_p => u_p.toRankingResponse()) : null
     }

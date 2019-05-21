@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
       table.integer('user_platform_id')
       table.string('password', 100)
       table.integer('score')
+      table.timestamps();
     })
   ])
 }

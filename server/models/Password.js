@@ -19,6 +19,8 @@ class Password extends Model {
         user_platform: { type: 'integer' },
         password: { type: 'string', minLength: 6 },
         score: { type: 'integer' },
+        created_at: { type: 'string', format: 'date-time' },
+        updated_at: { type: 'string', format: 'date-time' },
       }
     }
   }
@@ -35,11 +37,23 @@ class Password extends Model {
   async $beforeInsert(queryContext) {
     await super.$beforeInsert(queryContext)
     await this.$beforeSave(queryContext)
+    this.created_at = new Date().toISOString()
+    delete this.updated_at
   }
+
+  async $beforeUpdate(opt, queryContext) {
+    await super.$beforeUpdate(opt, queryContext)
+    await this.$beforeSave(queryContext, opt.old)
+    this.updated_at = new Date().toISOString()
+    delete this.created_at
+  }
+
 
   toResponse() {
     return {
       id: this.id,
+      created_at: this.created_at,
+      updated_at: this.updated_at,
       score: this.score
     }
   }
