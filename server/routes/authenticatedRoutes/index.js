@@ -51,7 +51,10 @@ router.post('/users/:userId(\\d+)/platforms/:platformId(\\d+)/password', asyncWr
     .query()
     .insertAndFetch({ user_platform_id: userPlatform.id, password, score })
 
-  res.send(passwordCreated.toResponse())
+  res.send({
+    message: 'Password registered successfully',
+    ...passwordCreated.toResponse()
+  })
 }));
 
 // TODO: Review why patch receives a empty req.body

@@ -4,12 +4,15 @@ import StrengthVisualizator from './strengthVisualizator/StrengthVisualizator'
 import { Button, Icon, Dropdown, Header, Segment, Grid, Form, Message } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import { getPlatforms, postPassword } from './actions'
+import {POST_PASSWORD_REQUEST} from './action-types';
 import passwordStrengthImage from './../../../assets/password-strength-img.png'
 
 
 const mapStateToProps = state => ({
   platforms: state.platforms.platforms,
-  userId: state.login.userId
+  userId: state.login.userId,
+  isFetching: state.isFetching.isFetching,
+  resultsPasswordPost: state.isFetching.results[POST_PASSWORD_REQUEST]
 })
 
 const mapDispatchToProps = dispatch => {
@@ -29,6 +32,18 @@ class AddPassword extends Component {
     this.props.getPlatforms();
   }
 
+  componentDidUpdate() {
+    console.log('resultsPasswordPost');
+    console.log(this.props.resultsPasswordPost);
+    const currentSending = this.props.isFetching.includes(POST_PASSWORD_REQUEST);
+    if (this.state.sending !== currentSending) {
+      if (this.props.resultsPasswordPost && this.props.resultsPasswordPost.message) {
+        this.setState({message: this.props.resultsPasswordPost.message, success: this.props.resultsPasswordPost.success})
+      }
+      this.setState({sending: currentSending});
+    }
+  }
+
   handleChange = ({ target }) => {
     this.setState({ [target.name]: target.value, message: '' });
   }
@@ -43,18 +58,30 @@ class AddPassword extends Component {
     this.props.postPassword(this.props.userId, this.state.platformId, this.state.password, this.state.score)
   }
 
-  _renderError() {
-    if (this.state.error) {
-      return (
-        <Message
-          negative
-          header='Action Forbidden'
-          content={this.state.error}
-        />
-      )
+  
+  _renderMessage(){
+    if (this.state.success) {
+      if(this.state.message) {
+        return (
+          <Message
+            positive
+            header='You can now login'
+            content={this.state.message}
+          />
+        )
+      }
     } else {
-      return null
+      if (this.state.message) {
+        return (
+          <Message
+            negative
+            header='Action Forbidden'
+            content={this.state.message}
+          />
+        )
+      }
     }
+    return null
   }
 
   render() {
@@ -75,8 +102,8 @@ class AddPassword extends Component {
                 <PasswordStrength fireChange={(target) => this.handleChange({ target })}></PasswordStrength>
                 <Form.Field required label='Select a platform:' />
                 <Dropdown name='platformId' onChange={this.handleDropDown} placeholder='Select a platform' fluid selection options={platformsOptions()} />
-                {this._renderError()}
-                <Button icon labelPosition='right' onClick={this.handleClick}>
+                {this._renderMessage()}
+                <Button icon labelPosition='right' onClick={this.handleClick} loading={this.state.sending}>
                   Submit score
                   <Icon name='protect' />
                 </Button>

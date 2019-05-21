@@ -17,7 +17,7 @@ class Password extends Model {
       properties: {
         id: { type: 'integer' },
         user_platform: { type: 'integer' },
-        password: { type: 'string' },
+        password: { type: 'string', minLength: 6 },
         score: { type: 'integer' },
       }
     }
