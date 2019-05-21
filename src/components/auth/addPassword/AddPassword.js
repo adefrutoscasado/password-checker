@@ -65,7 +65,7 @@ class AddPassword extends Component {
         return (
           <Message
             positive
-            header='You can now login'
+            header='Password registered succesfully'
             content={this.state.message}
           />
         )
@@ -75,7 +75,7 @@ class AddPassword extends Component {
         return (
           <Message
             negative
-            header='Action Forbidden'
+            header='Oops!'
             content={this.state.message}
           />
         )
