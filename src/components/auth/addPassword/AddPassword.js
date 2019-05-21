@@ -23,18 +23,14 @@ const mapDispatchToProps = dispatch => {
 }
 
 class AddPassword extends Component {
-  constructor() {
-    super();
-    this.state = { platforms: [], error: '' };
-  }
+
+  state = { platforms: [], message: '', sending: false };
 
   componentDidMount() {
     this.props.getPlatforms();
   }
 
   componentDidUpdate() {
-    console.log('resultsPasswordPost');
-    console.log(this.props.resultsPasswordPost);
     const currentSending = this.props.isFetching.includes(POST_PASSWORD_REQUEST);
     if (this.state.sending !== currentSending) {
       if (this.props.resultsPasswordPost && this.props.resultsPasswordPost.message) {
@@ -54,7 +50,7 @@ class AddPassword extends Component {
   }
 
   handleClick = async () => {
-    // this.setState({sending: true})
+    this.setState({sending: true})
     this.props.postPassword(this.props.userId, this.state.platformId, this.state.password, this.state.score)
   }
 
